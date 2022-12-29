@@ -35,7 +35,7 @@ class Player
     #[ORM\OneToMany(mappedBy: 'awayplayer', targetEntity: Game::class, orphanRemoval: true)]
     private Collection $awaygames;
 
-    public function __construct(string $name, int $strength, int $speed, int $reaction)
+    public function __construct(string $name, string $strength, string $speed, string $reaction)
     {
         $this->setName($name);
         $this->setStrength($strength);
@@ -73,7 +73,7 @@ class Player
         return $this->strength;
     }
 
-    public function setStrength(int $strength): self
+    public function setStrength(string $strength): self
     {
         if (!is_numeric($strength)) {
             // crea valor al azar
@@ -81,6 +81,7 @@ class Player
             $this->strength = $faker->numberBetween(0, 100);
         } else {
             // controla los límites posibles 0-100
+            $strength= intval($strength);
             if ($strength < 0) {
                 $this->strength = 0;
             } elseif ($strength > 100) {
@@ -98,7 +99,7 @@ class Player
         return $this->speed;
     }
 
-    public function setSpeed(int $speed): self
+    public function setSpeed(string $speed): self
     {
         if (!is_numeric($speed)) {
             // crea valor al azar
@@ -106,6 +107,7 @@ class Player
             $this->speed = $faker->numberBetween(0, 100);
         } else {
             // controla los límites posibles 0-100
+            $speed= intval($speed);
             if ($speed < 0) {
                 $this->speed = 0;
             } elseif ($speed > 100) {
@@ -123,7 +125,7 @@ class Player
         return $this->reaction;
     }
 
-    public function setReaction(int $reaction): self
+    public function setReaction(string $reaction): self
     {
         if (!is_numeric($reaction)) {
             // crea valor al azar
@@ -131,6 +133,7 @@ class Player
             $this->reaction = $faker->numberBetween(0, 100);
         } else {
             // controla los límites posibles 0-100
+            $reaction= intval($reaction);
             if ($reaction < 0) {
                 $this->reaction = 0;
             } elseif ($reaction > 100) {
