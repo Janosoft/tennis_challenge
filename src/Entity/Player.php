@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Faker;
 use App\Repository\PlayerRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -34,8 +35,12 @@ class Player
     #[ORM\OneToMany(mappedBy: 'awayplayer', targetEntity: Game::class, orphanRemoval: true)]
     private Collection $awaygames;
 
-    public function __construct()
+    public function __construct(string $name, int $strength, int $speed, int $reaction)
     {
+        $this->setName($name);
+        $this->setStrength($strength);
+        $this->setSpeed($speed);
+        $this->setReaction($reaction);
         $this->localgames = new ArrayCollection();
         $this->awaygames = new ArrayCollection();
     }
@@ -52,7 +57,13 @@ class Player
 
     public function setName(string $name): self
     {
-        $this->name = $name;
+        if (empty($name)) {
+            // crea valor al azar
+            $faker = Faker\Factory::create();
+            $this->name = $faker->name();
+        } else {
+            $this->name = $name;
+        }
 
         return $this;
     }
@@ -64,7 +75,20 @@ class Player
 
     public function setStrength(int $strength): self
     {
-        $this->strength = $strength;
+        if (!is_numeric($strength)) {
+            // crea valor al azar
+            $faker = Faker\Factory::create();
+            $this->strength = $faker->numberBetween(0, 100);
+        } else {
+            // controla los límites posibles 0-100
+            if ($strength < 0) {
+                $this->strength = 0;
+            } elseif ($strength > 100) {
+                $this->strength = 100;
+            } else {
+                $this->strength = $strength;
+            }
+        }
 
         return $this;
     }
@@ -76,7 +100,20 @@ class Player
 
     public function setSpeed(int $speed): self
     {
-        $this->speed = $speed;
+        if (!is_numeric($speed)) {
+            // crea valor al azar
+            $faker = Faker\Factory::create();
+            $this->speed = $faker->numberBetween(0, 100);
+        } else {
+            // controla los límites posibles 0-100
+            if ($speed < 0) {
+                $this->speed = 0;
+            } elseif ($speed > 100) {
+                $this->speed = 100;
+            } else {
+                $this->speed = $speed;
+            }
+        }
 
         return $this;
     }
@@ -88,7 +125,20 @@ class Player
 
     public function setReaction(int $reaction): self
     {
-        $this->reaction = $reaction;
+        if (!is_numeric($reaction)) {
+            // crea valor al azar
+            $faker = Faker\Factory::create();
+            $this->reaction = $faker->numberBetween(0, 100);
+        } else {
+            // controla los límites posibles 0-100
+            if ($reaction < 0) {
+                $this->reaction = 0;
+            } elseif ($reaction > 100) {
+                $this->reaction = 100;
+            } else {
+                $this->reaction = $reaction;
+            }
+        }
 
         return $this;
     }
