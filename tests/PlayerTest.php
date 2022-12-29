@@ -14,7 +14,14 @@ class PlayerTest extends TestCase
 
     public function testAPlayerCanBeCreated()
     {
-        $player= new Player("","","","3");
+        $player = new Player("", 1, -1, 100);
+        dump($player);
+    }
+
+    public function testAPlayerCanBeCreatedFromJSON()
+    {
+        $json = '{"name": "jano","strength": 80,"speed": 50,"reaction": 456}';
+        $player = Player::fromJSON($json);
         dump($player);
     }
 }

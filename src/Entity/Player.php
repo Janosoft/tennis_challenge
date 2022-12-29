@@ -35,7 +35,7 @@ class Player
     #[ORM\OneToMany(mappedBy: 'awayplayer', targetEntity: Game::class, orphanRemoval: true)]
     private Collection $awaygames;
 
-    public function __construct(string $name, string $strength, string $speed, string $reaction)
+    public function __construct(string $name, int $strength, int $speed, int $reaction)
     {
         $this->setName($name);
         $this->setStrength($strength);
@@ -43,6 +43,18 @@ class Player
         $this->setReaction($reaction);
         $this->localgames = new ArrayCollection();
         $this->awaygames = new ArrayCollection();
+    }
+
+    public static function fromJSON(string $json): Player
+    {
+        $faker = Faker\Factory::create();
+
+        $data = json_decode($json, true);
+        $name = (isset($data['name']) ? $data['name'] : $faker->name());
+        $strength = (isset($data['strength']) ? $data['strength'] : $faker->numberBetween(0, 100));
+        $speed = (isset($data['speed']) ? $data['speed'] : $faker->numberBetween(0, 100));
+        $reaction = (isset($data['reaction']) ? $data['reaction'] : $faker->numberBetween(0, 100));
+        return new Player($name, $strength, $speed, $reaction);
     }
 
     public function getId(): ?int
@@ -73,22 +85,15 @@ class Player
         return $this->strength;
     }
 
-    public function setStrength(string $strength): self
+    public function setStrength(int $strength): self
     {
-        if (!is_numeric($strength)) {
-            // crea valor al azar
-            $faker = Faker\Factory::create();
-            $this->strength = $faker->numberBetween(0, 100);
+        // controla los límites posibles 0-100
+        if ($strength < 0) {
+            $this->strength = 0;
+        } elseif ($strength > 100) {
+            $this->strength = 100;
         } else {
-            // controla los límites posibles 0-100
-            $strength= intval($strength);
-            if ($strength < 0) {
-                $this->strength = 0;
-            } elseif ($strength > 100) {
-                $this->strength = 100;
-            } else {
-                $this->strength = $strength;
-            }
+            $this->strength = $strength;
         }
 
         return $this;
@@ -99,22 +104,15 @@ class Player
         return $this->speed;
     }
 
-    public function setSpeed(string $speed): self
+    public function setSpeed(int $speed): self
     {
-        if (!is_numeric($speed)) {
-            // crea valor al azar
-            $faker = Faker\Factory::create();
-            $this->speed = $faker->numberBetween(0, 100);
+        // controla los límites posibles 0-100            
+        if ($speed < 0) {
+            $this->speed = 0;
+        } elseif ($speed > 100) {
+            $this->speed = 100;
         } else {
-            // controla los límites posibles 0-100
-            $speed= intval($speed);
-            if ($speed < 0) {
-                $this->speed = 0;
-            } elseif ($speed > 100) {
-                $this->speed = 100;
-            } else {
-                $this->speed = $speed;
-            }
+            $this->speed = $speed;
         }
 
         return $this;
@@ -125,22 +123,15 @@ class Player
         return $this->reaction;
     }
 
-    public function setReaction(string $reaction): self
+    public function setReaction(int $reaction): self
     {
-        if (!is_numeric($reaction)) {
-            // crea valor al azar
-            $faker = Faker\Factory::create();
-            $this->reaction = $faker->numberBetween(0, 100);
+        // controla los límites posibles 0-100
+        if ($reaction < 0) {
+            $this->reaction = 0;
+        } elseif ($reaction > 100) {
+            $this->reaction = 100;
         } else {
-            // controla los límites posibles 0-100
-            $reaction= intval($reaction);
-            if ($reaction < 0) {
-                $this->reaction = 0;
-            } elseif ($reaction > 100) {
-                $this->reaction = 100;
-            } else {
-                $this->reaction = $reaction;
-            }
+            $this->reaction = $reaction;
         }
 
         return $this;
