@@ -16,3 +16,7 @@ ACLARACIONES:
 NOTAS DE DESARROLLO:
 
 * Se debería quitar .env de git pero por cuestiones de agilidad en el desarrollo no lo voy a hacer
+
+BASE DE DATOS:
+
+TournamentType --* Tournament --* Stages --* Games *-- Players
