@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Faker;
 use App\Repository\TournamentTypeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -21,8 +22,13 @@ class TournamentType
     #[ORM\OneToMany(mappedBy: 'tournamentType', targetEntity: Tournament::class, orphanRemoval: true)]
     private Collection $tournaments;
 
-    public function __construct()
+    #[ORM\Column]
+    private array $skills = [];
+
+    public function __construct(string $title, array $skills)
     {
+        $this->setTitle($title);
+        $this->setSkills($skills);
         $this->tournaments = new ArrayCollection();
     }
 
@@ -38,7 +44,13 @@ class TournamentType
 
     public function setTitle(string $title): self
     {
-        $this->title = $title;
+        if (empty($title)) {
+            // crea valor al azar
+            $faker = Faker\Factory::create();
+            $this->title = ucfirst($faker->word());
+        } else {
+            $this->title = ucfirst($title);
+        }
 
         return $this;
     }
@@ -68,6 +80,25 @@ class TournamentType
             if ($tournament->getTournamentType() === $this) {
                 $tournament->setTournamentType(null);
             }
+        }
+
+        return $this;
+    }
+
+    public function getSkills(): array
+    {
+        return $this->skills;
+    }
+
+    public function setSkills(array $skills): self
+    {
+        if (empty($skills)) {
+            $this->skills = ['strength', 'speed', 'reaction'];
+        } else {
+            // convierte a minúsculas todos los skills
+            $skills = array_map('strtolower', $skills);
+            // limpia skills inválidos
+            $this->skills = array_filter($skills, fn ($skill) => in_array($skill, ['strength', 'speed', 'reaction']));
         }
 
         return $this;
