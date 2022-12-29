@@ -28,6 +28,10 @@ class Game
     #[ORM\JoinColumn(nullable: false)]
     private ?Player $awayplayer = null;
 
+    #[ORM\ManyToOne(inversedBy: 'games')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Stage $stage = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -77,6 +81,18 @@ class Game
     public function setAwayplayer(?Player $awayplayer): self
     {
         $this->awayplayer = $awayplayer;
+
+        return $this;
+    }
+
+    public function getStage(): ?Stage
+    {
+        return $this->stage;
+    }
+
+    public function setStage(?Stage $stage): self
+    {
+        $this->stage = $stage;
 
         return $this;
     }
