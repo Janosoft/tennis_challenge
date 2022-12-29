@@ -20,6 +20,14 @@ class Game
     #[ORM\Column]
     private ?bool $favorslocals = null;
 
+    #[ORM\ManyToOne(inversedBy: 'localgames')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Player $homeplayer = null;
+
+    #[ORM\ManyToOne(inversedBy: 'awaygames')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Player $awayplayer = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -45,6 +53,30 @@ class Game
     public function setFavorslocals(bool $favorslocals): self
     {
         $this->favorslocals = $favorslocals;
+
+        return $this;
+    }
+
+    public function getHomeplayer(): ?Player
+    {
+        return $this->homeplayer;
+    }
+
+    public function setHomeplayer(?Player $homeplayer): self
+    {
+        $this->homeplayer = $homeplayer;
+
+        return $this;
+    }
+
+    public function getAwayplayer(): ?Player
+    {
+        return $this->awayplayer;
+    }
+
+    public function setAwayplayer(?Player $awayplayer): self
+    {
+        $this->awayplayer = $awayplayer;
 
         return $this;
     }
