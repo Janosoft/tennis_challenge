@@ -12,11 +12,12 @@ ACLARACIONES:
 
 * Los Jugadores contarán con los atributos: Nombre, Fuerza, Velocidad, Reacción. Y la Habilidad será calculada con el promedio de los valores según el Torneo (Másculino: Fuerza, Velocidad -- Femenino: Reacción)
 * El resultado de los Enfrentamientos/Partidos dependerá de la Habilidad de los Jugadores, teniendo un "potenciador" de suerte(0-10) que aplicará solo a uno de ellos.
-* Se utilizará FakerPHP para generar valores al azar en los atributos del jugador que faltaran
+* En caso de empate se declarará ganador a aquel que posea el potenciador.
 
 NOTAS DE DESARROLLO:
 
 * Se debería quitar .env de git pero por cuestiones de agilidad en el desarrollo no lo voy a hacer
+* Se utilizará FakerPHP para generar valores al azar en los atributos del jugador que faltaran
 
 BASE DE DATOS:
 

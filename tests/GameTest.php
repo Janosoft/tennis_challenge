@@ -22,11 +22,15 @@ class GameTest extends TestCase
         $tournament = new Tournament("2010-01-28", $tournament_type);
         $stage = new Stage(1, $tournament);
         $tournament->addStage($stage);
-        $player1= new Player("Jano",80,85,55);
-        $player2= new Player("Colo",85,80,60);
-        $game= new Game($player1,$player2,$stage);
+        $player1 = new Player("Jano", 80, 80, 80);
+        $player2 = new Player("Colo", 80, 80, 80);
+        $game = new Game($player1, $player2, $stage);
         $player1->addLocalgame($game);
         $player2->addAwaygame($game);
-        dump($game);
+        //dump($game);
+
+        //TODO test rápido de jugar un juego (quitar de acá)
+        $winner = $game->playGame(true);
+        dump("Winner: " . $winner->getName());
     }
 }

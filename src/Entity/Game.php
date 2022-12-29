@@ -41,6 +41,35 @@ class Game
         $this->setStage($stage);
         $this->setLucky($faker->numberBetween(0, 10));
         $this->setFavorslocals($faker->boolean());
+        //FIXME setFavorslocals siempre queda en falso
+    }
+
+    public function playGame(bool $debug = false): Player
+    {
+        $skillPointsHomePlayer = 0;
+        $skillPointsAwayPlayer = 0;
+        $skillsUsed = $this->getStage()->getTournament()->getTournamentType()->getSkills();
+        foreach ($skillsUsed as $skill) {
+            $skillPointsHomePlayer += $this->getHomeplayer()->getSkill($skill);
+            $skillPointsAwayPlayer += $this->getAwayplayer()->getSkill($skill);
+        }
+        if ($this->isFavorslocals()) $skillPointsHomePlayer += $this->getLucky();
+        else $skillPointsAwayPlayer += $this->getLucky();
+
+        if ($debug) {
+            dump("Lucky: {$this->getLucky()}");
+            dump("Favors Local: " . ($this->isFavorslocals() ? "true" : "false"));
+            dump("HomePlayer: {$this->getHomeplayer()->getName()} ({$skillPointsHomePlayer})");
+            dump("AwayPlayer: {$this->getAwayplayer()->getName()} ({$skillPointsAwayPlayer})");
+        }
+
+        if ($skillPointsHomePlayer == $skillPointsAwayPlayer) {
+            // en caso de empate se decide si se favorece al local en el juego
+            return ($this->isFavorslocals() ? $this->getHomeplayer() : $this->getAwayplayer());
+        } else {
+            // se declara ganador al que más puntos de habilidad posea
+            return ($skillPointsHomePlayer > $skillPointsAwayPlayer ? $this->getHomeplayer() : $this->getAwayplayer());
+        }
     }
 
     public function getId(): ?int

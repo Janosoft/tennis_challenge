@@ -57,6 +57,12 @@ class Player
         return new Player($name, $strength, $speed, $reaction);
     }
 
+    public function getSkill(string $skill): int
+    {
+        if (in_array($skill, ['strength', 'speed', 'reaction'])) return (int) $this->$skill;
+        else return 0;            
+    }
+
     public function getId(): ?int
     {
         return $this->id;
