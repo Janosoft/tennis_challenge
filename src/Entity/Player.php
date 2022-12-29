@@ -48,12 +48,12 @@ class Player
     public static function fromJSON(string $json): Player
     {
         $faker = Faker\Factory::create();
-
         $data = json_decode($json, true);
-        $name = (isset($data['name']) ? $data['name'] : $faker->name());
+        $name = (isset($data['name']) ? $data['name'] : "");
         $strength = (isset($data['strength']) ? $data['strength'] : $faker->numberBetween(0, 100));
         $speed = (isset($data['speed']) ? $data['speed'] : $faker->numberBetween(0, 100));
         $reaction = (isset($data['reaction']) ? $data['reaction'] : $faker->numberBetween(0, 100));
+
         return new Player($name, $strength, $speed, $reaction);
     }
 

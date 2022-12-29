@@ -17,4 +17,11 @@ class TournamentTypeTest extends TestCase
         $tournament_type = new TournamentType("masculino", ['Strength', 'speed', 'cosaloca']);
         dump($tournament_type);
     }
+
+    public function testTournamentTypeCanBeCreatedFromJSON()
+    {
+        $json = '{"title": "masculino","skills": ["Strength","speed"]}';
+        $tournament_type = TournamentType::fromJSON($json);
+        dump($tournament_type);
+    }
 }

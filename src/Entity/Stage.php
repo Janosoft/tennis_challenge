@@ -26,8 +26,10 @@ class Stage
     #[ORM\JoinColumn(nullable: false)]
     private ?Tournament $tournament = null;
 
-    public function __construct()
+    public function __construct(int $sequence, Tournament $tournament)
     {
+        $this->setSequence($sequence);
+        $this->setTournament($tournament);
         $this->games = new ArrayCollection();
     }
 

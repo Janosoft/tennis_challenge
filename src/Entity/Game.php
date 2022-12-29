@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Faker;
 use App\Repository\GameRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -32,6 +33,16 @@ class Game
     #[ORM\JoinColumn(nullable: false)]
     private ?Stage $stage = null;
 
+    public function __construct(Player $homeplayer, Player $awayplayer, Stage $stage)
+    {
+        $faker = Faker\Factory::create();
+        $this->setHomeplayer($homeplayer);
+        $this->setAwayplayer($awayplayer);
+        $this->setStage($stage);
+        $this->setLucky($faker->numberBetween(0, 10));
+        $this->setFavorslocals($faker->boolean());
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -44,7 +55,14 @@ class Game
 
     public function setLucky(int $lucky): self
     {
-        $this->lucky = $lucky;
+        // controla los límites posibles 0-100
+        if ($lucky < 0) {
+            $this->lucky = 0;
+        } elseif ($lucky > 10) {
+            $this->strength = 10;
+        } else {
+            $this->lucky = $lucky;
+        }
 
         return $this;
     }

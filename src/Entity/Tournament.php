@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\TournamentRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -26,8 +27,10 @@ class Tournament
     #[ORM\JoinColumn(nullable: false)]
     private ?TournamentType $tournamentType = null;
 
-    public function __construct()
+    public function __construct(string $date, TournamentType $tournamentType)
     {
+        $this->setDate(new DateTime($date));
+        $this->setTournamentType($tournamentType);
         $this->stages = new ArrayCollection();
     }
 

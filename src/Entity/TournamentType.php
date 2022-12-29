@@ -32,6 +32,14 @@ class TournamentType
         $this->tournaments = new ArrayCollection();
     }
 
+    public static function fromJSON(string $json): TournamentType
+    {
+        $data = json_decode($json, true);
+        $title = (isset($data['title']) ? $data['title'] : "");
+        $skills = (isset($data['skills']) ? $data['skills'] : []);
+        return new TournamentType($title, $skills);
+    }
+
     public function getId(): ?int
     {
         return $this->id;
