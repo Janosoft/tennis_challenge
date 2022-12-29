@@ -22,6 +22,10 @@ class Stage
     #[ORM\OneToMany(mappedBy: 'stage', targetEntity: Game::class, orphanRemoval: true)]
     private Collection $games;
 
+    #[ORM\ManyToOne(inversedBy: 'stages')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Tournament $tournament = null;
+
     public function __construct()
     {
         $this->games = new ArrayCollection();
@@ -70,6 +74,18 @@ class Stage
                 $game->setStage(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTournament(): ?Tournament
+    {
+        return $this->tournament;
+    }
+
+    public function setTournament(?Tournament $tournament): self
+    {
+        $this->tournament = $tournament;
 
         return $this;
     }
