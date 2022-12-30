@@ -57,6 +57,25 @@ class Player
         return new Player($name, $strength, $speed, $reaction);
     }
 
+    public function toArray():array
+    {
+        $array = [
+            "name" => $this->getName(),
+            "strength" => $this->getStrength(),
+            "speed" => $this->getSpeed(),
+            "reaction" => $this->getReaction(),
+        ];
+
+        return $array;
+    }
+
+    public function toJSON(): string
+    {
+        $array= $this->toArray();
+        
+        return json_encode($array);
+    }
+
     public static function getPosibleSkills(): array
     {
         return ['strength', 'speed', 'reaction'];
@@ -65,7 +84,7 @@ class Player
     public function getSkill(string $skill): int
     {
         if (in_array($skill, Player::getPosibleSkills())) return (int) $this->$skill;
-        else return 0;            
+        else return 0;
     }
 
     public function getId(): ?int

@@ -24,4 +24,10 @@ class PlayerTest extends TestCase
         $player = Player::fromJSON($json);
         dump($player);
     }
+
+    public function testAPlayerCanBeShownAsJSON()
+    {
+        $player = new Player("Jano", 80, 90, 100);
+        dump($player->toJSON());
+    }
 }

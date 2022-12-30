@@ -43,6 +43,27 @@ class Game
         $this->setFavorslocals($faker->boolean());
     }
 
+    public function toArray(): array
+    {
+        $array = [
+            "stage" => $this->getStage()->getSequence(),
+            "lucky" => $this->getLucky(),
+            "favorslocals" => ($this->isFavorslocals()?"true":"false"),
+            "homeplayer" => $this->getHomeplayer()->toArray(),
+            "awayplayer" => $this->getAwayplayer()->toArray(),
+            "winner" => $this->playGame()->toArray(),
+        ];
+
+        return $array;
+    }
+
+    public function toJSON(): string
+    {
+        $array= $this->toArray();
+        
+        return json_encode($array);
+    }
+
     public function playGame(bool $debug = false): Player
     {
         $skillPointsHomePlayer = $this->getPlayerSkillPoints($this->getHomeplayer());
