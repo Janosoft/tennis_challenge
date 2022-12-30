@@ -101,12 +101,12 @@ class TournamentType
     public function setSkills(array $skills): self
     {
         if (empty($skills)) {
-            $this->skills = ['strength', 'speed', 'reaction'];
+            $this->skills = Player::getPosibleSkills();
         } else {
             // convierte a minúsculas todos los skills
             $skills = array_map('strtolower', $skills);
             // limpia skills inválidos
-            $this->skills = array_filter($skills, fn ($skill) => in_array($skill, ['strength', 'speed', 'reaction']));
+            $this->skills = array_filter($skills, fn ($skill) => in_array($skill, Player::getPosibleSkills()));
         }
 
         return $this;
