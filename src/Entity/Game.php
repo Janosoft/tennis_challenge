@@ -45,13 +45,9 @@ class Game
 
     public function playGame(bool $debug = false): Player
     {
-        $skillPointsHomePlayer = 0;
-        $skillPointsAwayPlayer = 0;
-        $skillsUsed = $this->getStage()->getTournament()->getTournamentType()->getSkills();
-        foreach ($skillsUsed as $skill) {
-            $skillPointsHomePlayer += $this->getHomeplayer()->getSkill($skill);
-            $skillPointsAwayPlayer += $this->getAwayplayer()->getSkill($skill);
-        }
+        $skillPointsHomePlayer = $this->getPlayerSkillPoints($this->getHomeplayer());
+        $skillPointsAwayPlayer = $this->getPlayerSkillPoints($this->getAwayplayer());
+
         if ($this->isFavorslocals()) $skillPointsHomePlayer += $this->getLucky();
         else $skillPointsAwayPlayer += $this->getLucky();
 
@@ -69,6 +65,16 @@ class Game
             // se declara ganador al que más puntos de habilidad posea
             return ($skillPointsHomePlayer > $skillPointsAwayPlayer ? $this->getHomeplayer() : $this->getAwayplayer());
         }
+    }
+
+    public function getPlayerSkillPoints(Player $player): int
+    {
+        $skillPoints= 0;
+        $skillsUsed = $this->getStage()->getTournament()->getTournamentType()->getSkills();
+        foreach ($skillsUsed as $skill) {
+            $skillPoints += $player->getSkill($skill);
+        }
+        return $skillPoints;
     }
 
     public function getId(): ?int
