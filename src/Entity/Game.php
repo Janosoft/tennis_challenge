@@ -41,7 +41,6 @@ class Game
         $this->setStage($stage);
         $this->setLucky($faker->numberBetween(0, 10));
         $this->setFavorslocals($faker->boolean());
-        //FIXME setFavorslocals siempre queda en falso
     }
 
     public function playGame(bool $debug = false): Player
