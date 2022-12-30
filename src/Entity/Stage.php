@@ -30,17 +30,17 @@ class Stage
     {
         $this->setSequence($sequence);
         $this->setTournament($tournament);
+        $tournament->addStage($this);
         $this->games = new ArrayCollection();
     }
 
     public function toArray(): array
     {
         $gamesarray = [];
-        foreach ($this->getGames() as $game)
-        {
+        foreach ($this->getGames() as $game) {
             array_push($gamesarray, $game->toArray());
         }
-        
+
         $array = [
             "id" => $this->getId(),
             "sequence" => $this->getSequence(),
@@ -55,6 +55,21 @@ class Stage
         $array = $this->toArray();
 
         return json_encode($array);
+    }
+
+    /**
+     * @return Collection<int, Player>
+     */
+    public function playStage(bool $debug = false): Collection
+    {
+        $winners = new ArrayCollection();
+
+        foreach ($this->getGames() as $game) {
+            if ($debug) dump($this->getSequence());
+            $winners->add($game->playGame($debug));
+        }
+
+        return $winners;
     }
 
     public function getId(): ?int

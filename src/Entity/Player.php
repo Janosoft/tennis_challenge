@@ -57,7 +57,7 @@ class Player
         return new Player($name, $strength, $speed, $reaction);
     }
 
-    public function toArray():array
+    public function toArray(): array
     {
         $array = [
             "id" => $this->getId(),
@@ -72,9 +72,14 @@ class Player
 
     public function toJSON(): string
     {
-        $array= $this->toArray();
-        
+        $array = $this->toArray();
+
         return json_encode($array);
+    }
+
+    public function __toString(): string
+    {
+        return "({$this->getId()}) {$this->getName()} ST:{$this->getStrength()} SP:{$this->getSpeed()} RE:{$this->getReaction()}";
     }
 
     public static function getPosibleSkills(): array

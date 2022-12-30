@@ -36,11 +36,15 @@ class Game
     public function __construct(Player $homeplayer, Player $awayplayer, Stage $stage)
     {
         $faker = Faker\Factory::create();
-        $this->setHomeplayer($homeplayer);
-        $this->setAwayplayer($awayplayer);
+        $this->setHomeplayer($homeplayer);        
+        $this->setAwayplayer($awayplayer);        
         $this->setStage($stage);
         $this->setLucky($faker->numberBetween(0, 10));
         $this->setFavorslocals($faker->boolean());
+        
+        $awayplayer->addAwaygame($this);
+        $homeplayer->addLocalgame($this);        
+        $stage->addGame($this);
     }
 
     public function toArray(): array
@@ -48,7 +52,7 @@ class Game
         $array = [
             "id" => $this->getId(),
             "lucky" => $this->getLucky(),
-            "favorslocals" => ($this->isFavorslocals()?"true":"false"),
+            "favorslocals" => ($this->isFavorslocals() ? "true" : "false"),
             "homeplayer" => $this->getHomeplayer()->toArray(),
             "awayplayer" => $this->getAwayplayer()->toArray(),
             "winner" => $this->playGame()->toArray(),
@@ -59,8 +63,8 @@ class Game
 
     public function toJSON(): string
     {
-        $array= $this->toArray();
-        
+        $array = $this->toArray();
+
         return json_encode($array);
     }
 
@@ -90,7 +94,7 @@ class Game
 
     public function getPlayerSkillPoints(Player $player): int
     {
-        $skillPoints= 0;
+        $skillPoints = 0;
         $skillsUsed = $this->getStage()->getTournament()->getTournamentType()->getSkills();
         foreach ($skillsUsed as $skill) {
             $skillPoints += $player->getSkill($skill);

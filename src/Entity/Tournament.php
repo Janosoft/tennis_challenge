@@ -31,6 +31,7 @@ class Tournament
     {
         $this->setDate(new DateTime($date));
         $this->setTournamentType($tournamentType);
+        $tournamentType->addTournament($this);
         $this->stages = new ArrayCollection();
     }
 
@@ -39,15 +40,13 @@ class Tournament
         //TODO Implementar
         $tournament_type = new TournamentType("masculino", ['Strength', 'speed', 'cosaloca']);
         $tournament = new Tournament("2010-01-28", $tournament_type);
-        $tournament_type->addTournament($tournament);
         return $tournament;
     }
 
-    public function toArray():array
+    public function toArray(): array
     {
         $stagesarray = [];
-        foreach ($this->getStages() as $stage)
-        {
+        foreach ($this->getStages() as $stage) {
             array_push($stagesarray, $stage->toArray());
         }
 
@@ -55,7 +54,7 @@ class Tournament
             "id" => $this->getId(),
             "date" => $this->getDate(),
             "tournament_type" => $this->getTournamentType()->toArray(),
-            "stages"=> $stagesarray,
+            "stages" => $stagesarray,
         ];
 
         return $array;
@@ -63,9 +62,26 @@ class Tournament
 
     public function toJSON(): string
     {
-        $array= $this->toArray();
-        
+        $array = $this->toArray();
+
         return json_encode($array);
+    }
+
+    public static function validAmountOfPlayers($playersCount): bool
+    {
+        // la cantidad de jugadores debe ser potencia de 2
+        return ceil(log($playersCount, 2)) == floor(log($playersCount, 2));
+    }
+
+    public function playTournament(): Player
+    {
+        $winners = new ArrayCollection();
+
+        foreach ($this->getStages() as $stage) {
+            $winners->add($stage->playStage());
+        }
+
+        return $winners->first();
     }
 
     public function getId(): ?int

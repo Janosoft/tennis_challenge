@@ -7,6 +7,7 @@ use App\Entity\Player;
 use App\Entity\Stage;
 use App\Entity\Tournament;
 use App\Entity\TournamentType;
+use Doctrine\Common\Collections\ArrayCollection;
 use PHPUnit\Framework\TestCase;
 
 class TournamentTest extends TestCase
@@ -20,7 +21,6 @@ class TournamentTest extends TestCase
     {
         $tournament_type = new TournamentType("masculino", ['Strength', 'speed', 'cosaloca']);
         $tournament = new Tournament("2010-01-28", $tournament_type);
-        $tournament_type->addTournament($tournament);
         dump($tournament);
     }
 
@@ -28,16 +28,42 @@ class TournamentTest extends TestCase
     {
         $tournament_type = new TournamentType("masculino", ['Strength', 'speed', 'cosaloca']);
         $tournament = new Tournament("2010-01-28", $tournament_type);
-        $tournament_type->addTournament($tournament);
         $stage = new Stage(1, $tournament);
-        $tournament->addStage($stage);
         $player1 = new Player("Jano", 80, 80, 80);
         $player2 = new Player("Colo", 80, 80, 80);
         $game = new Game($player1, $player2, $stage);
-        $player1->addLocalgame($game);
-        $player2->addAwaygame($game);
-        $stage->addGame($game);
-        
         dump($tournament->toJSON());
+    }
+
+    public function testATournamentCanBePlayed()
+    {
+        // CREAR TORNEO
+        $tournament_type = new TournamentType("masculino", ['Strength', 'speed', 'cosaloca']);
+        $tournament = new Tournament("2010-01-28", $tournament_type);
+
+        // ARMAR LISTA DE JUGADORES        
+        $players = array();
+        array_push($players, new Player("Jano", 80, 80, 80));
+        array_push($players, new Player("Andy", 80, 80, 80));
+        array_push($players, new Player("Colo", 80, 80, 80));
+        array_push($players, new Player("Fede", 80, 80, 80));
+        shuffle($players);
+
+        //VERIFICAR CANTIDAD DE JUGADORES
+        if (!Tournament::validAmountOfPlayers(count($players))) die("La cantidad de jugadores no es potencia de 2");
+
+        $games = array();
+        $iteration = 0;
+
+        // CREAR STAGE
+        $iteration++;
+        $stage = new Stage($iteration, $tournament);
+
+        while (!empty($players)) {
+            $game = new Game(array_pop($players), array_pop($players), $stage);
+            array_push($games, $game);
+        }
+
+        dump($stage);
     }
 }
