@@ -20,6 +20,7 @@ class GameTest extends TestCase
     {
         $tournament_type = new TournamentType("masculino", ['Strength', 'speed', 'cosaloca']);
         $tournament = new Tournament("2010-01-28", $tournament_type);
+        $tournament_type->addTournament($tournament);
         $stage = new Stage(1, $tournament);
         $tournament->addStage($stage);
         $player1 = new Player("Jano", 80, 80, 80);
@@ -27,10 +28,25 @@ class GameTest extends TestCase
         $game = new Game($player1, $player2, $stage);
         $player1->addLocalgame($game);
         $player2->addAwaygame($game);
-        //dump($game);
+        $stage->addGame($game);
+        dump($game);
+    }
 
-        //TODO test rápido de jugar un juego (quitar de acá)
+    public function testAGameCanBePlayed()
+    {
+        $tournament_type = new TournamentType("masculino", ['Strength', 'speed', 'cosaloca']);
+        $tournament = new Tournament("2010-01-28", $tournament_type);
+        $tournament_type->addTournament($tournament);
+        $stage = new Stage(1, $tournament);
+        $tournament->addStage($stage);
+        $player1 = new Player("Jano", 80, 80, 80);
+        $player2 = new Player("Colo", 80, 80, 80);
+        $game = new Game($player1, $player2, $stage);
+        $player1->addLocalgame($game);
+        $player2->addAwaygame($game);
+        $stage->addGame($game);
         $winner = $game->playGame(true);
         dump("Winner: " . $winner->getName());
+        dump($game);
     }
 }

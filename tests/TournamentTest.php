@@ -17,6 +17,7 @@ class TournamentTest extends TestCase
     {
         $tournament_type = new TournamentType("masculino", ['Strength', 'speed', 'cosaloca']);
         $tournament = new Tournament("2010-01-28", $tournament_type);
+        $tournament_type->addTournament($tournament);
         dump($tournament);
     }
 }
