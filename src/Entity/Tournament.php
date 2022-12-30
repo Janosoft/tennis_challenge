@@ -34,6 +34,40 @@ class Tournament
         $this->stages = new ArrayCollection();
     }
 
+    public static function fromJSON(string $json): Tournament
+    {
+        //TODO Implementar
+        $tournament_type = new TournamentType("masculino", ['Strength', 'speed', 'cosaloca']);
+        $tournament = new Tournament("2010-01-28", $tournament_type);
+        $tournament_type->addTournament($tournament);
+        return $tournament;
+    }
+
+    public function toArray():array
+    {
+        $stagesarray = [];
+        foreach ($this->getStages() as $stage)
+        {
+            array_push($stagesarray, $stage->toArray());
+        }
+
+        $array = [
+            "id" => $this->getId(),
+            "date" => $this->getDate(),
+            "tournament_type" => $this->getTournamentType()->toArray(),
+            "stages"=> $stagesarray,
+        ];
+
+        return $array;
+    }
+
+    public function toJSON(): string
+    {
+        $array= $this->toArray();
+        
+        return json_encode($array);
+    }
+
     public function getId(): ?int
     {
         return $this->id;

@@ -60,6 +60,7 @@ class Player
     public function toArray():array
     {
         $array = [
+            "id" => $this->getId(),
             "name" => $this->getName(),
             "strength" => $this->getStrength(),
             "speed" => $this->getSpeed(),

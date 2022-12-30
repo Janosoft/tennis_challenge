@@ -46,7 +46,7 @@ class Game
     public function toArray(): array
     {
         $array = [
-            "stage" => $this->getStage()->getSequence(),
+            "id" => $this->getId(),
             "lucky" => $this->getLucky(),
             "favorslocals" => ($this->isFavorslocals()?"true":"false"),
             "homeplayer" => $this->getHomeplayer()->toArray(),

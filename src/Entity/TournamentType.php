@@ -40,6 +40,24 @@ class TournamentType
         return new TournamentType($title, $skills);
     }
 
+    public function toArray():array
+    {
+        $array = [
+            "id" => $this->getId(),
+            "title" => $this->getTitle(),
+            "skills" => $this->getSkills(),
+        ];
+
+        return $array;
+    }
+
+    public function toJSON(): string
+    {
+        $array= $this->toArray();
+        
+        return json_encode($array);
+    }
+
     public function getId(): ?int
     {
         return $this->id;

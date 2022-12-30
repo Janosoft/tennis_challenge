@@ -33,6 +33,30 @@ class Stage
         $this->games = new ArrayCollection();
     }
 
+    public function toArray(): array
+    {
+        $gamesarray = [];
+        foreach ($this->getGames() as $game)
+        {
+            array_push($gamesarray, $game->toArray());
+        }
+        
+        $array = [
+            "id" => $this->getId(),
+            "sequence" => $this->getSequence(),
+            "games" => $gamesarray,
+        ];
+
+        return $array;
+    }
+
+    public function toJSON(): string
+    {
+        $array = $this->toArray();
+
+        return json_encode($array);
+    }
+
     public function getId(): ?int
     {
         return $this->id;
