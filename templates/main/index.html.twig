@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tennis Challenge{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Bienvenido a Tennis Challenge! 🎾</h1>
+
+    Contenido de la API:
+    <ul>
+        <li><a href="{{ url('tournament_index')}}" target="_blank">Listado de Torneos</a></li>
+        <li><a href="{{ url('tournament_type_index')}}" target="_blank">Listado de Tipos de Torneos</a></li>
+        <li><a href="{{ url('tournament_show', {date: '2022-01-20'})}}" target="_blank">Mostrar Torneos por Fecha</a></li>
+        <li><a href="{{ url('tournament_type_show', {type: 'masculino'})}}" target="_blank">Mostrar Torneos por Tipo</a></li>
+        {# TODO terminar #}
+        {# <li><a href="{{ url('tournament_create')}}" target="_blank">Crear Torneo desde JSON</a></li> #}
+    </ul>
+</div>
+{% endblock %}
