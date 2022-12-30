@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[Route('/tournament_type', name: 'tournament_type_')]
 class TournamentTypeController extends AbstractController
 {
     private $em;
@@ -16,7 +17,7 @@ class TournamentTypeController extends AbstractController
         $this->em= $em;
     }
 
-    #[Route('/tournament_type', name: 'app_tournament_type')]
+    #[Route('/', name: 'index')]
     public function index(): Response
     {
         $tournament_types= $this->em->getRepository(TournamentType::class)->findAll();
@@ -25,4 +26,23 @@ class TournamentTypeController extends AbstractController
             'tournament_types' => $tournament_types,
         ]);
     }
+
+    #[Route('/{type}', name: 'show')]
+    public function show($type): Response
+    {
+        //TODO hacer correctamente. Esto es una prueba
+        // Mostrar todos los torneos que sean de $type
+
+        $tournament_type = new TournamentType("masculino", ['Strength', 'speed', 'cosaloca']);
+        return new Response($tournament_type->toJSON());
+        /*
+        $tournament_types= $this->em->getRepository(TournamentType::class)->findAll();
+        return $this->render('tournament_type/index.html.twig', [
+            'controller_name' => 'TournamentTypeController',
+            'tournament_types' => $tournament_types,
+        ]);
+        */
+    }
+
+    
 }

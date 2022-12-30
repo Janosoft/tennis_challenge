@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[Route('/stage', name: 'stage_')]
 class StageController extends AbstractController
 {
     private $em;
@@ -16,7 +17,7 @@ class StageController extends AbstractController
         $this->em = $em;
     }
 
-    #[Route('/stage', name: 'app_stage')]
+    #[Route('/', name: 'index')]
     public function index(): Response
     {
         $stages = $this->em->getRepository(Stage::class)->findAll();

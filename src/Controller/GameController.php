@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[Route('/game', name: 'game_')]
 class GameController extends AbstractController
 {
     private $em;
@@ -16,7 +17,7 @@ class GameController extends AbstractController
         $this->em = $em;
     }
 
-    #[Route('/game', name: 'app_game')]
+    #[Route('/', name: 'index')]
     public function index(): Response
     {
         $games = $this->em->getRepository(Game::class)->findAll();

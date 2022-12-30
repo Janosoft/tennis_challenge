@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[Route('/player', name: 'player_')]
 class PlayerController extends AbstractController
 {
     private $em;
@@ -16,7 +17,7 @@ class PlayerController extends AbstractController
         $this->em = $em;
     }
 
-    #[Route('/player', name: 'app_player')]
+    #[Route('/', name: 'index')]
     public function index(): Response
     {
         $players = $this->em->getRepository(Player::class)->findAll();
