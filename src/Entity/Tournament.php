@@ -20,12 +20,15 @@ class Tournament
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $date = null;
 
-    #[ORM\OneToMany(mappedBy: 'tournament', targetEntity: Stage::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'tournament', targetEntity: Stage::class, orphanRemoval: true, cascade: ['persist'])]
     private Collection $stages;
 
     #[ORM\ManyToOne(inversedBy: 'tournaments')]
     #[ORM\JoinColumn(nullable: false)]
     private ?TournamentType $tournamentType = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $winner = null;
 
     public function __construct(string $date, TournamentType $tournamentType)
     {
@@ -67,21 +70,35 @@ class Tournament
         return json_encode($array);
     }
 
-    public static function validAmountOfPlayers($playersCount): bool
+    public function validAmountOfPlayers(int $playersCount): bool
     {
         // la cantidad de jugadores debe ser potencia de 2
         return ceil(log($playersCount, 2)) == floor(log($playersCount, 2));
     }
 
-    public function playTournament(): Player
+    public function playTournament(array $players)
     {
-        $winners = new ArrayCollection();
-
-        foreach ($this->getStages() as $stage) {
-            $winners->add($stage->playStage());
+        if (!$this->validAmountOfPlayers(count($players))) die("La cantidad de jugadores no es potencia de 2");
+        $iteration = 0;
+        while (count($players)!=1) {        
+            // CREAR STAGE
+            $iteration++;
+            $stage = new Stage($iteration, $this);
+            while (!empty($players)) {
+                new Game(array_pop($players), array_pop($players), $stage);
+            }
+            $players= $stage->playStage()->toArray();
         }
 
-        return $winners->first();
+        $ganador= array_pop($players);
+
+        // GUARDAR GANADOR
+        $this->setWinner($ganador->getName());
+    }
+
+    public function saveTournament()
+    {
+        
     }
 
     public function getId(): ?int
@@ -139,6 +156,18 @@ class Tournament
     public function setTournamentType(?TournamentType $tournamentType): self
     {
         $this->tournamentType = $tournamentType;
+
+        return $this;
+    }
+
+    public function getWinner(): ?string
+    {
+        return $this->winner;
+    }
+
+    public function setWinner(string $winner): self
+    {
+        $this->winner = $winner;
 
         return $this;
     }

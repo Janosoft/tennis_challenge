@@ -21,15 +21,15 @@ class Game
     #[ORM\Column]
     private ?bool $favorslocals = null;
 
-    #[ORM\ManyToOne(inversedBy: 'localgames')]
+    #[ORM\ManyToOne(inversedBy: 'localgames', cascade: ['persist'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Player $homeplayer = null;
 
-    #[ORM\ManyToOne(inversedBy: 'awaygames')]
+    #[ORM\ManyToOne(inversedBy: 'awaygames', cascade: ['persist'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Player $awayplayer = null;
 
-    #[ORM\ManyToOne(inversedBy: 'games')]
+    #[ORM\ManyToOne(inversedBy: 'games', cascade: ['persist'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Stage $stage = null;
 
@@ -118,7 +118,7 @@ class Game
         if ($lucky < 0) {
             $this->lucky = 0;
         } elseif ($lucky > 10) {
-            $this->strength = 10;
+            $this->lucky = 10;
         } else {
             $this->lucky = $lucky;
         }

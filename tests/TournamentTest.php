@@ -53,23 +53,7 @@ class TournamentTest extends TestCase
         array_push($players, new Player("Sergio", 80, 80, 80));
         shuffle($players);
 
-        //VERIFICAR CANTIDAD DE JUGADORES
-        if (!Tournament::validAmountOfPlayers(count($players))) die("La cantidad de jugadores no es potencia de 2");
-
-        $iteration = 0;
-        while (count($players)!=1) {        
-            // CREAR STAGE
-            $iteration++;
-            $stage = new Stage($iteration, $tournament);
-            while (!empty($players)) {
-                new Game(array_pop($players), array_pop($players), $stage);
-            }
-            $players= $stage->playStage()->toArray();
-        }
-
-        // MOSTRAR GANADOR
-        $ganador= array_pop($players);
-        dump ("EL GANADOR FUE: {$ganador->getName()}");
-        
+        $tournament->playTournament($players);
+        dump("EL GANADOR FUE: {$tournament->getWinner()}");
     }
 }

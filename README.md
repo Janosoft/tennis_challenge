@@ -18,6 +18,7 @@ NOTAS DE DESARROLLO:
 
 * Se debería quitar .env de git pero por cuestiones de agilidad en el desarrollo no lo voy a hacer
 * Se utilizará FakerPHP para generar valores al azar en los atributos del jugador que faltaran
+* Los datos se guardarán en la BD si y solo si funcionó todo correctamente. Es por ello que en los games, los homeplayer_id y awayplayer_id siempre van a ser consecutivos
 
 BASE DE DATOS:
 

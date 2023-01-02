@@ -19,7 +19,7 @@ class Stage
     #[ORM\Column(type: Types::SMALLINT)]
     private ?int $sequence = null;
 
-    #[ORM\OneToMany(mappedBy: 'stage', targetEntity: Game::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'stage', targetEntity: Game::class, orphanRemoval: true, cascade: ['persist'])]
     private Collection $games;
 
     #[ORM\ManyToOne(inversedBy: 'stages')]

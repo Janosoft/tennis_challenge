@@ -19,7 +19,7 @@ class TournamentType
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
-    #[ORM\OneToMany(mappedBy: 'tournamentType', targetEntity: Tournament::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'tournamentType', targetEntity: Tournament::class, orphanRemoval: true, cascade: ['persist'])]
     private Collection $tournaments;
 
     #[ORM\Column]
