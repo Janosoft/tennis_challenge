@@ -23,7 +23,9 @@ class TournamentController extends AbstractController
     #[Route('/', name: 'index')]
     public function index(): Response
     {
-        $tournaments = $this->em->getRepository(Tournament::class)->findAll();
+        //FIXME no fuciona la vista
+        //$tournaments = $this->em->getRepository(Tournament::class)->findAll();
+        $tournaments= "";
         return $this->render('tournament/index.html.twig', [
             'controller_name' => 'TournamentController',
             'tournaments' => $tournaments,
@@ -33,16 +35,17 @@ class TournamentController extends AbstractController
     #[Route('/create', name: 'create')]
     public function create(Request $request): Response
     {
-        $form= $this->createForm(type:TournamentFormType::class);
+        $tournament= new Tournament();
+        $form= $this->createForm(type:TournamentFormType::class, data: $tournament);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid())
         {
-            //TODO HACER MAGIA
-            dump ($request); die;
-
+            $tournament->playJsonTournament();
+            $this->em->persist($tournament);
+            $this->em->flush();
             return $this->redirectToRoute(route: 'tournament_index');
-        }
+        }        
         return $this->render('tournament/create.html.twig',['form' => $form]);
 
     }
