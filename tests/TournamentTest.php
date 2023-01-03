@@ -7,7 +7,6 @@ use App\Entity\Player;
 use App\Entity\Stage;
 use App\Entity\Tournament;
 use App\Entity\TournamentType;
-use Doctrine\Common\Collections\ArrayCollection;
 use PHPUnit\Framework\TestCase;
 
 class TournamentTest extends TestCase
