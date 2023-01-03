@@ -56,7 +56,7 @@ TournamentType --* Tournament --* Stages --* Games *-- Players
 }
 
 ## EJECUCIÓN DESDE LA CONSOLA ##
-* Es posible ejecutar el test 'testATournamentCanBePlayed', el cual guardará en la Base de Datos todo el torneo, e imprimirá el string 'EL GANADOR FUE: NOMBRE_JUGADOR'
+* Es posible ejecutar el test 'testATournamentCanBePlayed', el cual simulará el torneo, e imprimirá el string 'EL GANADOR FUE: NOMBRE_JUGADOR'
 
 ## EJECUCIÓN EN TEST ##
 * Es posible ejecutar un Fixture y verificar el funcionamiento en una base de datos _test utilizando el comando 'php bin/console --env=test doctrine:fixtures:load'
