@@ -53,13 +53,4 @@ class TournamentRepository extends ServiceEntityRepository
        ;
    }
 
-//    public function findOneBySomeField($value): ?Tournament
-//    {
-//        return $this->createQueryBuilder('t')
-//            ->andWhere('t.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }
