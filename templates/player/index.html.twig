@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello PlayerController!{% endblock %}
+{% block title %}Listado de Jugadores{% endblock %}
 
 {% block body %}
 <style>
@@ -9,14 +9,27 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <h1>Listado de Jugadores</h1>
+    <table class="table table-sm caption-top">
+        <thead class="table-light">
+            <tr>
+                <th>Nombre</th>
+                <th style="text-align:end;">Fuerza</th>
+                <th style="text-align:end;">Velocidad</th>
+                <th style="text-align:end;">Reacción</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for player in players %}
+                <tr>
+                    <td><a href="/player/{{ player.id }}">{{player.name}}</a></td>
+                    <td align="right">{{player.strength}}</td>
+                    <td align="right">{{player.speed}}</td>
+                    <td align="right">{{player.reaction}}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/xampp/htdocs/tennis_challenge/src/Controller/PlayerController.php'|file_link(0) }}">src/Controller/PlayerController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/xampp/htdocs/tennis_challenge/templates/player/index.html.twig'|file_link(0) }}">templates/player/index.html.twig</a></code></li>
-    </ul>
-
-    <pre> {{ dump(players) }} </pre>
 </div>
 {% endblock %}

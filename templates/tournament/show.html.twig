@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Listado de Etapas
+{% block title %}Hello TournamentController!
 {% endblock %}
 
 {% block body %}
@@ -18,21 +18,23 @@
 	</style>
 
 	<div class="example-wrapper">
-		<h1>Listado de Etapas</h1>
+		<h1>Listado de Torneos</h1>
 		<table class="table table-sm caption-top">
 			<thead class="table-light">
 				<tr>
 					<th>ID</th>
-					<th>Torneo</th>
-					<th style="text-align:center;">Secuencia</th>
+					<th>Fecha</th>
+					<th style="text-align:end;"><strong>Ganador</strong></th>
+					<th>JSON</th>
 				</tr>
 			</thead>
 			<tbody>
-				{% for stage in stages %}
+				{% for tournament in tournaments %}
 					<tr>
-						<td><a href="/stage/{{ stage.id }}">{{stage.id}}</a></td>
-						<td>{{stage.getTournament().getDate()|date("d/m/Y")}}</td>
-						<td style="text-align:center;">{{stage.getSequence()}}</td>
+						<td>{{tournament.id}}</td>
+						<td>{{tournament.getDate()|date("d/m/Y")}}</td>
+						<td style="text-align:end;"><strong>{{tournament.getWinner()}}</strong></td>
+						<td>{{tournament.toJSON()}}</td>
 					</tr>
 				{% endfor %}
 			</tbody>

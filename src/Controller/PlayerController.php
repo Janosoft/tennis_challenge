@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Game;
 use App\Entity\Player;
+use App\Repository\PlayerRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,4 +28,18 @@ class PlayerController extends AbstractController
             'players' => $players,
         ]);
     }
+
+    #[Route('/{id}', name: 'show')]
+    public function show(Player $player): Response
+    {
+        $player->getLocalgames();
+        $player->getAwaygames();
+
+        return $this->render('player/show.html.twig', [
+            'controller_name' => 'PlayerController',
+            'player' => $player,
+        ]);
+    }
+
+
 }

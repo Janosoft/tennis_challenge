@@ -26,4 +26,12 @@ class StageController extends AbstractController
             'stages' => $stages,
         ]);
     }
+
+    #[Route('/{id}', name: 'show')]
+    public function show(Stage $stage): Response
+    {
+        return $this->render('stage/show.html.twig', [
+            'stage' => $stage,
+        ]);
+    }
 }

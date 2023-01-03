@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PlayerController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>{{player.name}}</h1>
+    <ul>
+        <li> Fuerza: {{player.strength}}</li>
+        <li> Velocidad: {{player.speed}}</li>
+        <li> Reacción: {{player.reaction}}</li>
+    </ul>
+    <pre>{{player.toJSON()}}</pre>
+</div>
+{% endblock %}

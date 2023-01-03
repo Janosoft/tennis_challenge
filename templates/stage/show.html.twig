@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Listado de Partidos
+{% block title %}Hello StageController!
 {% endblock %}
 
 {% block body %}
@@ -18,34 +18,44 @@
 	</style>
 
 	<div class="example-wrapper">
-		<h1>Listado de Partidos</h1>
+		<h1>ID:
+			{{stage.id}}</h1>
+		<ul>
+			<li>
+				Torneo:
+				{{stage.getTournament().getDate()|date("d/m/Y")}}</li>
+			<li>
+				Secuencia:
+				{{stage.getSequence()}}</li>
+		</ul>
 		<table class="table table-sm caption-top">
 			<thead class="table-light">
 				<tr>
 					<th>ID</th>
-					<th>Torneo</th>
-					<th style="text-align:center;">Secuencia</th>
 					<th style="text-align:center;">Suerte</th>
 					<th style="text-align:center;">Favorece Local</th>
 					<th style="text-align:end;">Local</th>
 					<th style="text-align:end;">Visitante</th>
-					<th style="text-align:end;"><strong>Ganador</strong></th>
+					<th style="text-align:end;">Ganador</th>
 				</tr>
 			</thead>
 			<tbody>
-				{% for game in games %}
+				{% for game in stage.getGames() %}
 					<tr>
-						<td><a href="/game/{{ game.id }}">{{game.id}}</a></td>
-						<td>{{game.getStage().getTournament().getDate()|date("d/m/Y")}}</td>
-						<td style="text-align:center;">{{game.getStage().getSequence()}}</td>
+						<td>
+							<a href="/game/{{ game.id }}">{{game.id}}</a>
+						</td>
 						<td style="text-align:center;">{{game.getLucky()}}</td>
 						<td style="text-align:center;">{{game.isFavorslocals()?"Si":"No"}}</td>
 						<td style="text-align:end;">{{game.getHomeplayer().getName()}}</td>
 						<td style="text-align:end;">{{game.getAwayplayer().getName()}}</td>
-						<td align="right"><strong>{{game.playGame().getName()}}</strong></td>
+						<td align="right">
+							<strong>{{game.playGame().getName()}}</strong>
+						</td>
 					</tr>
 				{% endfor %}
 			</tbody>
 		</table>
+		<pre>{{stage.toJSON()}}</pre>
 	</div>
 {% endblock %}

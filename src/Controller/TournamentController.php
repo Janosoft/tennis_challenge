@@ -6,6 +6,7 @@ use App\Entity\Tournament;
 use App\Entity\TournamentType;
 use App\Form\TournamentFormType;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,9 +24,7 @@ class TournamentController extends AbstractController
     #[Route('/', name: 'index')]
     public function index(): Response
     {
-        //FIXME no fuciona la vista
-        //$tournaments = $this->em->getRepository(Tournament::class)->findAll();
-        $tournaments= "";
+        $tournaments = $this->em->getRepository(Tournament::class)->findAll();
         return $this->render('tournament/index.html.twig', [
             'controller_name' => 'TournamentController',
             'tournaments' => $tournaments,
@@ -53,22 +52,11 @@ class TournamentController extends AbstractController
     #[Route('/{date}', name: 'show')]
     public function show($date): Response
     {
-        //TODO hacer correctamente. Esto es una prueba
-        //mostrar todos los torneos de la fecha
-        $tournament_type = new TournamentType("masculino", ['Strength', 'speed', 'cosaloca']);
-        $tournament = new Tournament("2010-01-28", $tournament_type);
-        $tournament_type->addTournament($tournament);
-        
-        return new Response($tournament->toJSON());
-
-
-        /*
-        $tournaments = $this->em->getRepository(Tournament::class)->findAll();
-        return $this->render('tournament/index.html.twig', [
+        $tournaments = $this->em->getRepository(Tournament::class)->findByDate($date);
+        return $this->render('tournament/show.html.twig', [
             'controller_name' => 'TournamentController',
             'tournaments' => $tournaments,
         ]);
-        */
     }
 
 }
