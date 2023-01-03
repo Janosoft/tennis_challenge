@@ -33,7 +33,7 @@ class TournamentTypeController extends AbstractController
     #[Route('/create', name: 'create')]
     public function create(Request $request): Response
     {
-        $tournament_type = new TournamentType("", []);
+        $tournament_type = new TournamentType();
         $form = $this->createForm(type: TournamentTypeFormType::class, data: $tournament_type);
         $form->handleRequest($request);
 

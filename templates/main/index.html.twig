@@ -13,12 +13,12 @@
 
     Contenido de la API:
     <ul>
-        <li><a href="{{ url('tournament_index')}}" target="_blank">Listado de Torneos</a></li>
-        <li><a href="{{ url('tournament_type_index')}}" target="_blank">Listado de Tipos de Torneos</a></li>
-        <li><a href="{{ url('tournament_show', {date: '2022-01-20'})}}" target="_blank">Mostrar Torneos por Fecha</a></li>
-        <li><a href="{{ url('tournament_type_show', {type: 'masculino'})}}" target="_blank">Mostrar Torneos por Tipo</a></li>
-        {# TODO terminar #}
-        {# <li><a href="{{ url('tournament_create')}}" target="_blank">Crear Torneo desde JSON</a></li> #}
+        <li><a href="{{ url('tournament_index')}}" target="_self">Listado de Torneos</a></li>
+        <li><a href="{{ url('tournament_type_index')}}" target="_self">Listado de Tipos de Torneos</a></li>
+        <li><a href="{{ url('tournament_show', {date: '2022-01-20'})}}" target="_self">Mostrar Torneos por Fecha</a></li>
+        <li><a href="{{ url('tournament_type_show', {type: 'masculino'})}}" target="_self">Mostrar Torneos por Tipo</a></li>
+        <li><a href="{{ url('tournament_type_create')}}" target="_self">Crear un Tipo de Torneo</a></li>
+        <li><a href="{{ url('tournament_create')}}" target="_self">Crear Torneo desde JSON</a></li>
     </ul>
 </div>
 {% endblock %}

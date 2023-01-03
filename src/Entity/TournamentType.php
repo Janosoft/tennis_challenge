@@ -25,7 +25,7 @@ class TournamentType
     #[ORM\Column]
     private array $skills = [];
 
-    public function __construct(string $title, array $skills)
+    public function __construct(string $title = "", array $skills = [])
     {
         $this->setTitle($title);
         $this->setSkills($skills);
@@ -40,7 +40,7 @@ class TournamentType
         return new TournamentType($title, $skills);
     }
 
-    public function toArray():array
+    public function toArray(): array
     {
         $array = [
             "id" => $this->getId(),
@@ -53,9 +53,14 @@ class TournamentType
 
     public function toJSON(): string
     {
-        $array= $this->toArray();
-        
+        $array = $this->toArray();
+
         return json_encode($array);
+    }
+
+    public function __toString(): string
+    {
+        return "({$this->getId()}) {$this->getTitle()} Skills: " . implode(', ', $this->getSkills());
     }
 
     public function getId(): ?int

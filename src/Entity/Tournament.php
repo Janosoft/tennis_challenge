@@ -2,12 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\TournamentRepository;
+use Faker;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+
+use function PHPUnit\Framework\isNull;
 
 #[ORM\Entity(repositoryClass: TournamentRepository::class)]
 class Tournament
@@ -30,20 +32,15 @@ class Tournament
     #[ORM\Column(length: 255)]
     private ?string $winner = null;
 
-    public function __construct(string $date, TournamentType $tournamentType)
+    private string $json = "";
+
+    public function __construct(string $date = "", TournamentType $tournamentType = null)
     {
         $this->setDate(new DateTime($date));
-        $this->setTournamentType($tournamentType);
-        $tournamentType->addTournament($this);
+        if (!is_null($tournamentType)) {
+            $this->setTournamentType($tournamentType);
+        }
         $this->stages = new ArrayCollection();
-    }
-
-    public static function fromJSON(string $json): Tournament
-    {
-        //TODO Implementar
-        $tournament_type = new TournamentType("masculino", ['Strength', 'speed', 'cosaloca']);
-        $tournament = new Tournament("2010-01-28", $tournament_type);
-        return $tournament;
     }
 
     public function toArray(): array
@@ -79,26 +76,40 @@ class Tournament
     public function playTournament(array $players)
     {
         if (!$this->validAmountOfPlayers(count($players))) die("La cantidad de jugadores no es potencia de 2");
+        shuffle($players);
+
         $iteration = 0;
-        while (count($players)!=1) {        
+        while (count($players) != 1) {
             // CREAR STAGE
             $iteration++;
             $stage = new Stage($iteration, $this);
             while (!empty($players)) {
                 new Game(array_pop($players), array_pop($players), $stage);
             }
-            $players= $stage->playStage()->toArray();
+            $players = $stage->playStage()->toArray();
         }
 
-        $ganador= array_pop($players);
+        $ganador = array_pop($players);
 
         // GUARDAR GANADOR
         $this->setWinner($ganador->getName());
     }
 
-    public function saveTournament()
+    public function playJsonTournament()
     {
+        $jsonArray= json_decode($this->getJson(),true);
         
+        // CREAR TIPO DE TORNEO
+        $tournament_type = new TournamentType($jsonArray['tournament_type']['title'],$jsonArray['tournament_type']['skills']);
+        $this->setTournamentType($tournament_type);
+        
+        // ARMAR LISTA DE JUGADORES        
+        $players = array();
+        foreach ($jsonArray['players'] as $playerlist)
+        {
+           array_push($players, new Player($playerlist['name'], $playerlist['strength'], $playerlist['speed'], $playerlist['reaction']));
+        }
+        $this->playTournament($players);
     }
 
     public function getId(): ?int
@@ -156,6 +167,7 @@ class Tournament
     public function setTournamentType(?TournamentType $tournamentType): self
     {
         $this->tournamentType = $tournamentType;
+        $tournamentType->addTournament($this);
 
         return $this;
     }
@@ -168,6 +180,18 @@ class Tournament
     public function setWinner(string $winner): self
     {
         $this->winner = $winner;
+
+        return $this;
+    }
+
+    public function getJson(): ?string
+    {
+        return $this->json;
+    }
+
+    public function setJson(string $json): self
+    {
+        $this->json = $json;
 
         return $this;
     }

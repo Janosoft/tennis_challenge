@@ -45,15 +45,9 @@ class TournamentTest extends TestCase
         $players = array();
         array_push($players, new Player("Jano", 80, 80, 80));
         array_push($players, new Player("Andy", 80, 80, 80));
-        array_push($players, new Player("Colo", 80, 80, 80));
-        array_push($players, new Player("Fede", 80, 80, 80));
-        array_push($players, new Player("Nacho", 80, 80, 80));
-        array_push($players, new Player("Frumento", 80, 80, 80));
-        array_push($players, new Player("Moncho", 80, 80, 80));
-        array_push($players, new Player("Sergio", 80, 80, 80));
-        shuffle($players);
 
         $tournament->playTournament($players);
         dump("EL GANADOR FUE: {$tournament->getWinner()}");
+        dump($tournament->toJSON());
     }
 }

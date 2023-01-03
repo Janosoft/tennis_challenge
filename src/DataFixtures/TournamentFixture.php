@@ -29,7 +29,6 @@ class TournamentFixture extends Fixture
         array_push($players, new Player($faker->name(), $faker->numberBetween(0, 100), $faker->numberBetween(0, 100), $faker->numberBetween(0, 100)));
         array_push($players, new Player($faker->name(), $faker->numberBetween(0, 100), $faker->numberBetween(0, 100), $faker->numberBetween(0, 100)));
         array_push($players, new Player($faker->name(), $faker->numberBetween(0, 100), $faker->numberBetween(0, 100), $faker->numberBetween(0, 100)));
-        shuffle($players);
 
         // SE JUEGA EL TORNEO
         $tournament->playTournament($players);
