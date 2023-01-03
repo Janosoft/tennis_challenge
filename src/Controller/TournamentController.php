@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Tournament;
 use App\Entity\TournamentType;
+use App\Form\TournamentFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -28,6 +30,23 @@ class TournamentController extends AbstractController
         ]);
     }
 
+    #[Route('/create', name: 'create')]
+    public function create(Request $request): Response
+    {
+        $form= $this->createForm(type:TournamentFormType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            //TODO HACER MAGIA
+            dump ($request); die;
+
+            return $this->redirectToRoute(route: 'tournament_index');
+        }
+        return $this->render('tournament/create.html.twig',['form' => $form]);
+
+    }
+
     #[Route('/{date}', name: 'show')]
     public function show($date): Response
     {
@@ -48,4 +67,5 @@ class TournamentController extends AbstractController
         ]);
         */
     }
+
 }
