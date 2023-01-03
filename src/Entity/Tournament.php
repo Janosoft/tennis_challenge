@@ -26,7 +26,7 @@ class Tournament
     #[ORM\OneToMany(mappedBy: 'tournament', targetEntity: Stage::class, orphanRemoval: true, cascade: ['persist'])]
     private Collection $stages;
 
-    #[ORM\ManyToOne(inversedBy: 'tournaments')]
+    #[ORM\ManyToOne(inversedBy: 'tournaments', cascade: ['persist'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?TournamentType $tournamentType = null;
 

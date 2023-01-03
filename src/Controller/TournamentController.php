@@ -3,10 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Tournament;
-use App\Entity\TournamentType;
 use App\Form\TournamentFormType;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
