@@ -1,7 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello StageController!
-{% endblock %}
+{% block title %}Etapa {{stage.getId()}}{% endblock %}
 
 {% block body %}
 	<style>
@@ -19,7 +18,7 @@
 
 	<div class="example-wrapper">
 		<h1>ID:
-			{{stage.id}}</h1>
+			{{stage.getId()}}</h1>
 		<ul>
 			<li>
 				Torneo:
@@ -42,16 +41,12 @@
 			<tbody>
 				{% for game in stage.getGames() %}
 					<tr>
-						<td>
-							<a href="/game/{{ game.id }}">{{game.id}}</a>
-						</td>
+						<td><a href="/game/{{ game.getId() }}">{{game.getId()}}</a></td>
 						<td style="text-align:center;">{{game.getLucky()}}</td>
 						<td style="text-align:center;">{{game.isFavorslocals()?"Si":"No"}}</td>
 						<td style="text-align:end;">{{game.getHomeplayer().getName()}}</td>
 						<td style="text-align:end;">{{game.getAwayplayer().getName()}}</td>
-						<td align="right">
-							<strong>{{game.playGame().getName()}}</strong>
-						</td>
+						<td align="right"><strong>{{game.playGame().getName()}}</strong></td>
 					</tr>
 				{% endfor %}
 			</tbody>

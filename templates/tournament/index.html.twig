@@ -1,7 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Listado de Torneos
-{% endblock %}
+{% block title %}Listado de Torneos{% endblock %}
 
 {% block body %}
 	<style>
@@ -30,7 +29,7 @@
 			<tbody>
 				{% for tournament in tournaments %}
 					<tr>
-						<td>{{tournament.id}}</td>
+						<td>{{tournament.getId()}}</td>
 						<td><a href="/tournament/{{ tournament.getDate()|date("Y-m-d")}}">{{tournament.getDate()|date("d/m/Y")}}</a></td>
 						<td style="text-align:end;"><strong>{{tournament.getWinner()}}</strong></td>
 					</tr>

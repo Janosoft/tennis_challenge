@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello PlayerController!{% endblock %}
+{% block title %}Jugador {{player.getName()}}{% endblock %}
 
 {% block body %}
 <style>
@@ -11,9 +11,9 @@
 <div class="example-wrapper">
     <h1>{{player.name}}</h1>
     <ul>
-        <li> Fuerza: {{player.strength}}</li>
-        <li> Velocidad: {{player.speed}}</li>
-        <li> Reacción: {{player.reaction}}</li>
+        <li> Fuerza: {{player.getStrenght()}}</li>
+        <li> Velocidad: {{player.getSpeed()}}</li>
+        <li> Reacción: {{player.getReaction()}}</li>
     </ul>
     <pre>{{player.toJSON()}}</pre>
 </div>

@@ -30,7 +30,7 @@
 			<tbody>
 				{% for stage in stages %}
 					<tr>
-						<td><a href="/stage/{{ stage.id }}">{{stage.id}}</a></td>
+						<td><a href="/stage/{{ stage.getId() }}">{{stage.getId()}}</a></td>
 						<td>{{stage.getTournament().getDate()|date("d/m/Y")}}</td>
 						<td style="text-align:center;">{{stage.getSequence()}}</td>
 					</tr>

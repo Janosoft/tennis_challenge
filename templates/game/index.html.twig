@@ -35,7 +35,7 @@
 			<tbody>
 				{% for game in games %}
 					<tr>
-						<td><a href="/game/{{ game.id }}">{{game.id}}</a></td>
+						<td><a href="/game/{{ game.getId() }}">{{game.getId()}}</a></td>
 						<td>{{game.getStage().getTournament().getDate()|date("d/m/Y")}}</td>
 						<td style="text-align:center;">{{game.getStage().getSequence()}}</td>
 						<td style="text-align:center;">{{game.getLucky()}}</td>
