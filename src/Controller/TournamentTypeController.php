@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\TournamentType;
-use App\Form\TournamentFormType;
 use App\Form\TournamentTypeFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -46,20 +45,13 @@ class TournamentTypeController extends AbstractController
         return $this->render('tournament_type/create.html.twig', ['form' => $form]);
     }
 
-    #[Route('/{type}', name: 'show')]
-    public function show($type): Response
+    #[Route('/{title}', name: 'show')]
+    public function show($title): Response
     {
-        //TODO hacer correctamente. Esto es una prueba
-        // Mostrar todos los torneos que sean de $type
-
-        $tournament_type = new TournamentType("masculino", ['Strength', 'speed', 'cosaloca']);
-        return new Response($tournament_type->toJSON());
-        /*
-        $tournament_types= $this->em->getRepository(TournamentType::class)->findAll();
-        return $this->render('tournament_type/index.html.twig', [
-            'controller_name' => 'TournamentTypeController',
+        $tournament_types = $this->em->getRepository(TournamentType::class)->findByTitle($title);
+        return $this->render('tournament_type/show.html.twig', [
+            'controller_name' => 'TournamentController',
             'tournament_types' => $tournament_types,
         ]);
-        */
     }
 }
