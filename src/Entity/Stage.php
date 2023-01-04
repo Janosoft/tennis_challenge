@@ -84,6 +84,7 @@ class Stage
 
     public function setSequence(int $sequence): self
     {
+        if ($sequence < 0) $sequence = 0;        
         $this->sequence = $sequence;
 
         return $this;
