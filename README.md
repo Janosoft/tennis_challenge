@@ -37,7 +37,7 @@ TournamentType --* Tournament --* Stages --* Games *-- Players
 * Es posible ejecutar un Fixture y verificar el funcionamiento en una base de datos _test utilizando el comando 'php bin/console --env=test doctrine:fixtures:load'
 
 ## USO DE LA API ##
-* Es posible crear un torneo realizando un POST a /tournament 
+* Es posible crear un torneo realizando un POST a /tournament con un JSON en el Request Body
 
 ## MODELO DE JSON A UTILIZAR PARA CREAR UN TORNEO ##
 {
