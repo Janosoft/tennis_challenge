@@ -11,42 +11,65 @@ use PHPUnit\Framework\TestCase;
 
 class TournamentTest extends TestCase
 {
-    public function testSomething(): void
-    {
-        $this->assertTrue(true);
-    }
 
-    public function testATournamentCanBeCreated()
+    public function testATournamentCanBeCreated(): void
     {
-        $tournament_type = new TournamentType("masculino", ['Strength', 'speed', 'cosaloca']);
+        $tournament_type = new TournamentType("masculino", ['strength', 'speed']);
         $tournament = new Tournament("2010-01-28", $tournament_type);
-        dump($tournament);
+        $this->assertNotEmpty($tournament);
+        $this->assertIsObject($tournament);
     }
 
-    public function testATournamentCanBeShownAsJSON()
+    public function testATournamentCanBeShownAsJSON(): void
     {
-        $tournament_type = new TournamentType("masculino", ['Strength', 'speed', 'cosaloca']);
+        $tournament_type = new TournamentType("masculino", ['strength', 'speed']);
         $tournament = new Tournament("2010-01-28", $tournament_type);
         $stage = new Stage(1, $tournament);
         $player1 = new Player("Jano", 80, 80, 80);
         $player2 = new Player("Colo", 80, 80, 80);
-        $game = new Game($player1, $player2, $stage);
-        dump($tournament->toJSON());
+        new Game($player1, $player2, $stage);
+        $json = $tournament->toJSON();
+        $this->assertNotEmpty($json);
+        $this->assertIsString($json);
     }
 
-    public function testATournamentCanBePlayed()
+    public function testATournamentCantHaveInvalidDate(): void
     {
-        // CREAR TORNEO
-        $tournament_type = new TournamentType("masculino", ['Strength', 'speed', 'cosaloca']);
-        $tournament = new Tournament("2010-01-28", $tournament_type);
-
-        // ARMAR LISTA DE JUGADORES        
-        $players = array();
-        array_push($players, new Player("Jano", 80, 80, 80));
-        array_push($players, new Player("Andy", 80, 80, 80));
-
-        $tournament->playTournament($players);
-        dump("EL GANADOR FUE: {$tournament->getWinner()}");
-        dump($tournament->toJSON());
+        $tournament_type = new TournamentType("masculino", ['strength', 'speed']);
+        $tournament = new Tournament("", $tournament_type);
+        $this->assertNotEmpty($tournament->getDate());
     }
+
+    public function testATournamentCanBePlayed(): void
+    {
+        $tournament_type = new TournamentType("masculino", ['strength', 'speed']);
+        $tournament = new Tournament("2010-01-28", $tournament_type);
+        $stage = new Stage(1, $tournament);
+        $player1 = new Player("Jano", 80, 80, 80);
+        $player2 = new Player("Colo", 80, 80, 80);
+        $player3 = new Player("Pepe", 80, 80, 80);
+        $player4 = new Player("Moncho", 80, 80, 80);
+        $players = [$player1, $player2, $player3, $player4];
+        $tournament->playTournament($players);
+        $this->assertNotEmpty($tournament->getWinner());
+        $this->assertIsString($tournament->getWinner());
+    }
+    
+    public function testATournamentCantHaveLosersWinning(): void
+    {
+        $tournament_type = new TournamentType("masculino", ['strength', 'speed']);
+        $tournament = new Tournament("2010-01-28", $tournament_type);
+        $stage = new Stage(1, $tournament);
+        $player1 = new Player("Winner", 100, 100, 100);
+        $player2 = new Player("Loser 1", 0, 0, 0);
+        $player3 = new Player("Loser 2", 0, 0, 0);
+        $player4 = new Player("Loser 3", 0, 0, 0);
+        $players = [$player1, $player2, $player3, $player4];
+        $tournament->playTournament($players);
+        $this->assertNotEmpty($tournament->getWinner());
+        $this->assertIsString($tournament->getWinner());
+        $this->assertStringContainsString("Winner",$tournament->getWinner());
+    }
+
+
 }

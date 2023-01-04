@@ -11,27 +11,49 @@ use PHPUnit\Framework\TestCase;
 
 class StageTest extends TestCase
 {
-    public function testSomething(): void
+    public function testAStageCanBeCreated(): void
     {
-        $this->assertTrue(true);
-    }
-
-    public function testAStageCanBeCreated()
-    {
-        $tournament_type = new TournamentType("masculino", ['Strength', 'speed', 'cosaloca']);
+        $tournament_type = new TournamentType("masculino", ['strength', 'speed']);
         $tournament = new Tournament("2010-01-28", $tournament_type);
         $stage = new Stage(1, $tournament);
-        dump($stage);
+        $this->assertNotEmpty($stage);
+        $this->assertIsObject($stage);
     }
 
-    public function testAStageCanBeShownAsJSON()
+    public function testAStageCanBeShownAsJSON(): void
     {
-        $tournament_type = new TournamentType("masculino", ['Strength', 'speed', 'cosaloca']);
+        $tournament_type = new TournamentType("masculino", ['strength', 'speed']);
         $tournament = new Tournament("2010-01-28", $tournament_type);
         $stage = new Stage(1, $tournament);
         $player1 = new Player("Jano", 80, 80, 80);
         $player2 = new Player("Colo", 80, 80, 80);
-        $game = new Game($player1, $player2, $stage);
-        dump($stage->toJSON());
+        new Game($player1, $player2, $stage);
+        $json = $stage->toJSON();
+        $this->assertNotEmpty($json);
+        $this->assertIsString($json);
+    }
+
+    public function testAStageCantHaveInvalidSequence(): void
+    {
+        $tournament_type = new TournamentType("masculino", ['strength', 'speed']);
+        $tournament = new Tournament("2010-01-28", $tournament_type);
+        $stage = new Stage(-100, $tournament);
+        $this->assertGreaterThanOrEqual(0, $stage->getSequence());
+    }
+
+    public function testAStageCanBePlayed(): void
+    {
+        $tournament_type = new TournamentType("masculino", ['strength', 'speed']);
+        $tournament = new Tournament("2010-01-28", $tournament_type);
+        $stage = new Stage(1, $tournament);
+        $player1 = new Player("Jano", 80, 80, 80);
+        $player2 = new Player("Colo", 80, 80, 80);
+        $player3 = new Player("Pepe", 80, 80, 80);
+        $player4 = new Player("Moncho", 80, 80, 80);
+        new Game($player1, $player2, $stage);
+        new Game($player3, $player4, $stage);
+        $winners = $stage->playStage();
+        $this->assertNotEmpty($winners->toArray());
+        $this->assertIsArray($winners->toArray());
     }
 }
