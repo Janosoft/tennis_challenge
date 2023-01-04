@@ -27,11 +27,21 @@ TournamentType --* Tournament --* Stages --* Games *-- Players
 * Se utilizará FakerPHP para generar valores al azar en los atributos del jugador que faltaran
 * Los datos se guardarán en la BD si y solo si funcionó todo correctamente. Es por ello que en los games, los homeplayer_id y awayplayer_id siempre van a ser consecutivos
 
-## USO DE LA API ##
+## USO DEL SITIO ##
 * El sitio cuenta con un HOME y desde allí se puede navegar por todas las opciones disponibles, entre ellas la posibilidad de jugar/crear un torneo desde un JSON.
+
+## EJECUCIÓN DESDE LA CONSOLA ##
+* Es posible ejecutar el test 'testATournamentCanBePlayed', el cual simulará el torneo, e imprimirá el string 'EL GANADOR FUE: NOMBRE_JUGADOR'
+
+## EJECUCIÓN EN TEST ##
+* Es posible ejecutar un Fixture y verificar el funcionamiento en una base de datos _test utilizando el comando 'php bin/console --env=test doctrine:fixtures:load'
+
+## USO DE LA API ##
+* Es posible crear un torneo realizando un POST a /tournament 
 
 ## MODELO DE JSON A UTILIZAR PARA CREAR UN TORNEO ##
 {
+  "date": "2023-03-15",
   "tournament_type": {
     "title": "Mixto",
     "skills": [
@@ -54,12 +64,6 @@ TournamentType --* Tournament --* Stages --* Games *-- Players
     }
   ]
 }
-
-## EJECUCIÓN DESDE LA CONSOLA ##
-* Es posible ejecutar el test 'testATournamentCanBePlayed', el cual simulará el torneo, e imprimirá el string 'EL GANADOR FUE: NOMBRE_JUGADOR'
-
-## EJECUCIÓN EN TEST ##
-* Es posible ejecutar un Fixture y verificar el funcionamiento en una base de datos _test utilizando el comando 'php bin/console --env=test doctrine:fixtures:load'
 
 ## AUTOR ##
 Alejandro Martín Lodes

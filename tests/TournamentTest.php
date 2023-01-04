@@ -56,7 +56,7 @@ class TournamentTest extends TestCase
 
     public function testATournamentCanBePlayedFromJSON(): void
     {
-        $json= '{"tournament_type":{"title":"Mixto","skills":["strength","reaction"]},"players":[{"name":"Alejandro","strength":90,"speed":85,"reaction":90},{"name":"Andrea","strength":85,"speed":90,"reaction":90}]}';
+        $json= '{"date":"2023-03-15","tournament_type":{"title":"Mixto","skills":["strength","reaction"]},"players":[{"name":"Alejandro","strength":90,"speed":85,"reaction":90},{"name":"Andrea","strength":85,"speed":90,"reaction":90}]}';
         $tournament= new Tournament();
         $tournament->setJson($json);
         $tournament->playJsonTournament();

@@ -130,6 +130,9 @@ class Tournament
     {
         $jsonArray = json_decode($this->getJson(), true);
 
+        // ESTABLECER FECHA
+        $this->setDate(new DateTime($jsonArray['date']));
+
         // CREAR TIPO DE TORNEO
         $tournament_type = new TournamentType($jsonArray['tournament_type']['title'], $jsonArray['tournament_type']['skills']);
         $this->setTournamentType($tournament_type);
