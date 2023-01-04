@@ -11,7 +11,7 @@
 <div class="example-wrapper">
     <h1>Bienvenido a Tennis Challenge! 🎾</h1>
 
-    Contenido de la API:
+    Contenido del sitio:
     <ul>
         <li><a href="{{ url('tournament_index')}}" target="_self">Listado de Torneos</a></li>
         <li><a href="{{ url('tournament_type_index')}}" target="_self">Listado de Tipos de Torneos</a></li>
@@ -19,8 +19,9 @@
 
         <li><a href="{{ url('tournament_show', {date: '2022-01-20'})}}" target="_self">Mostrar Torneos por Fecha</a></li>
         <li><a href="{{ url('tournament_type_show', {title: 'masculino'})}}" target="_self">Mostrar Torneos por Tipo</a></li>
-        <li><a href="{{ url('tournament_type_create')}}" target="_self">Crear un Tipo de Torneo</a></li>
-        <li><a href="{{ url('tournament_create')}}" target="_self">Crear Torneo desde JSON</a></li>
+
+        <li><a href="{{ url('tournament_type_create')}}" target="_self">FORM: Crear un Tipo de Torneo</a></li>
+        <li><a href="{{ url('tournament_create')}}" target="_self">FORM: Crear Torneo desde JSON</a></li>
     </ul>
 </div>
 {% endblock %}

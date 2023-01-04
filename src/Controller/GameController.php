@@ -17,7 +17,7 @@ class GameController extends AbstractController
         $this->em = $em;
     }
 
-    #[Route('/', name: 'index')]
+    #[Route('/', name: 'index', methods: ["GET"])]
     public function index(): Response
     {
         $games = $this->em->getRepository(Game::class)->findAll();
@@ -27,7 +27,7 @@ class GameController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'show')]
+    #[Route('/{id}', name: 'show', methods: ["GET"])]
     public function show(Game $game): Response
     {
         return $this->render('game/show.html.twig', [

@@ -17,7 +17,7 @@ class StageController extends AbstractController
         $this->em = $em;
     }
 
-    #[Route('/', name: 'index')]
+    #[Route('/', name: 'index', methods: ["GET"])]
     public function index(): Response
     {
         $stages = $this->em->getRepository(Stage::class)->findAll();
@@ -27,7 +27,7 @@ class StageController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'show')]
+    #[Route('/{id}', name: 'show', methods: ["GET"])]
     public function show(Stage $stage): Response
     {
         return $this->render('stage/show.html.twig', [

@@ -19,7 +19,7 @@ class TournamentTypeController extends AbstractController
         $this->em = $em;
     }
 
-    #[Route('/', name: 'index')]
+    #[Route('/', name: 'index', methods: ["GET"])]
     public function index(): Response
     {
         $tournament_types = $this->em->getRepository(TournamentType::class)->findAll();
@@ -29,7 +29,7 @@ class TournamentTypeController extends AbstractController
         ]);
     }
 
-    #[Route('/create', name: 'create')]
+    #[Route('/create', name: 'create', methods: ["GET"])]
     public function create(Request $request): Response
     {
         $tournament_type = new TournamentType();
@@ -44,8 +44,8 @@ class TournamentTypeController extends AbstractController
 
         return $this->render('tournament_type/create.html.twig', ['form' => $form]);
     }
-
-    #[Route('/{title}', name: 'show')]
+    
+    #[Route('/{title}', name: 'show', methods: ["GET"])]
     public function show($title): Response
     {
         $tournament_types = $this->em->getRepository(TournamentType::class)->findByTitle($title);
@@ -54,4 +54,5 @@ class TournamentTypeController extends AbstractController
             'tournament_types' => $tournament_types,
         ]);
     }
+
 }

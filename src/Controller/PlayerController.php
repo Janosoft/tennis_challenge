@@ -17,7 +17,7 @@ class PlayerController extends AbstractController
         $this->em = $em;
     }
 
-    #[Route('/', name: 'index')]
+    #[Route('/', name: 'index', methods: ["GET"])]
     public function index(): Response
     {
         $players = $this->em->getRepository(Player::class)->findAll();
@@ -27,7 +27,7 @@ class PlayerController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'show')]
+    #[Route('/{id}', name: 'show', methods: ["GET"])]
     public function show(Player $player): Response
     {
         $player->getLocalgames();
