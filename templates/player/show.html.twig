@@ -1,20 +1,42 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Jugador {{player.getName()}}{% endblock %}
+{% block title %}Jugador {{player.getId()}}{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+	<style>
+		.example-wrapper {
+			margin: 1em auto;
+			max-width: 800px;
+			width: 95%;
+			font: 18px / 1.5 sans-serif;
+		}
+		.example-wrapper code {
+			background: #F5F5F5;
+			padding: 2px 6px;
+		}
+	</style>
 
-<div class="example-wrapper">
-    <h1>{{player.name}}</h1>
-    <ul>
-        <li> Fuerza: {{player.getStrenght()}}</li>
-        <li> Velocidad: {{player.getSpeed()}}</li>
-        <li> Reacción: {{player.getReaction()}}</li>
-    </ul>
-    <pre>{{player.toJSON()}}</pre>
-</div>
+	<div class="example-wrapper">
+        <h1>ID:{{player.getId()}}</h1>
+		<table class="table table-sm caption-top">
+			<thead class="table-light">
+				<tr>
+					<th style="text-align:center;">Nombre</th>
+					<th style="text-align:end;">Fuerza</th>
+					<th style="text-align:end;">Velocidad</th>
+					<th style="text-align:end;">Reacción</th>
+				</tr>
+			</thead>
+			<tbody>
+                <tr>
+                    <td style="text-align:center;">{{player.getName()}}</td>
+                    <td style="text-align:end;">{{player.getStrength()}}</td>
+                    <td style="text-align:end;">{{player.getSpeed()}}</td>
+                    <td style="text-align:end;">{{player.getReaction()}}</td>
+                </tr>
+
+			</tbody>
+		</table>
+		<pre>{{player.toJSON()}}</pre>
+	</div>
 {% endblock %}
