@@ -1,22 +1,48 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Juego {{game.getId()}}{% endblock %}
+{% block title %}Partido {{game.getId()}}{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+	<style>
+		.example-wrapper {
+			margin: 1em auto;
+			max-width: 800px;
+			width: 95%;
+			font: 18px / 1.5 sans-serif;
+		}
+		.example-wrapper code {
+			background: #F5F5F5;
+			padding: 2px 6px;
+		}
+	</style>
 
-<div class="example-wrapper">
-    <h1>ID: {{game.getId()}}</h1>
-    <ul>
-        <li> Lucky: {{game.getLucky()}}</li>
-        <li> Favorece Local: {{game.isFavorslocals()?"Si":"No"}}</li>
-        <li> Jugador Local: {{game.getHomeplayer().getName()}}</li>
-        <li> Jugador Visitante: {{game.getAwayplayer().getName()}}</li>
-        <li> <strong>Ganador: {{game.playGame().getName()}}</strong></li>
-    </ul>
-    <pre>{{game.toJSON()}}</pre>
-</div>
+	<div class="example-wrapper">
+		<h1>ID:
+			{{game.getId()}}</h1>
+		<ul>
+			<li>Etapa: {{game.getStage().getSequence()}}</li>
+		</ul>
+		<table class="table table-sm caption-top">
+			<thead class="table-light">
+				<tr>
+					<th style="text-align:center;">Suerte</th>
+					<th style="text-align:center;">Favorece Local</th>
+					<th style="text-align:end;">Local</th>
+					<th style="text-align:end;">Visitante</th>
+					<th style="text-align:end;"><strong>Ganador</strong></th>
+				</tr>
+			</thead>
+			<tbody>
+                <tr>
+                    <td style="text-align:center;">{{game.getLucky()}}</td>
+                    <td style="text-align:center;">{{game.isFavorslocals()?"Si":"No"}}</td>
+                    <td style="text-align:end;"><a href="/player/{{ game.getHomeplayer().getId() }}">{{game.getHomeplayer().getName()}}</a></td>
+                    <td style="text-align:end;"><a href="/player/{{ game.getAwayplayer().getId() }}">{{game.getAwayplayer().getName()}}</a></td>
+                    <td style="text-align:end;"><a href="/player/{{ game.playGame().getId() }}"><strong>{{game.playGame().getName()}}</strong></a></td>
+                </tr>
+
+			</tbody>
+		</table>
+		<pre>{{game.toJSON()}}</pre>
+	</div>
 {% endblock %}
