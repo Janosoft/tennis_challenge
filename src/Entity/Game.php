@@ -6,6 +6,7 @@ use Faker;
 use App\Repository\GameRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use InvalidArgumentException;
 
 #[ORM\Entity(repositoryClass: GameRepository::class)]
 class Game
@@ -35,6 +36,7 @@ class Game
 
     public function __construct(Player $homeplayer, Player $awayplayer, Stage $stage)
     {
+        if ($homeplayer === $awayplayer) throw new InvalidArgumentException('Player vs Same Player');
         $faker = Faker\Factory::create();
         $this->setHomeplayer($homeplayer);        
         $this->setAwayplayer($awayplayer);        
