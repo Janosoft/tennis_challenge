@@ -34,6 +34,11 @@ class Stage
         $this->games = new ArrayCollection();
     }
 
+    /**
+     * Convierte y devuelve el objeto como un array asociativo [nombre_atributo] => [valor_atributo]
+     *
+     * @return array Devuelve un array que contiene todos los atributos del objeto
+     */
     public function toArray(): array
     {
         $gamesarray = [];
@@ -50,6 +55,11 @@ class Stage
         return $array;
     }
 
+    /**
+     * Convierte y devuelve el objeto en un formato JSON {"[nombre_atributo]" : "[valor_atributo]"}
+     *
+     * @return string Devuelve un string que contiene todos los atributos del objeto en formato JSON
+     */
     public function toJSON(): string
     {
         $array = $this->toArray();
@@ -58,19 +68,21 @@ class Stage
     }
 
     /**
-     * @return Collection<int, Player>
+     * Calcula y devuelve los ganadores de los partidos correspondientes a una Etapa
+     * 
+     * @return array Devuelve un array con objetos Player correspondientes a los ganadores de la Etapa
      */
-    public function playStage(bool $debug = false): Collection
+    public function playStage(): array
     {
-        $winners = new ArrayCollection();
-
+        $winners = array();
         foreach ($this->getGames() as $game) {
-            if ($debug) dump($this->getSequence());
-            $winners->add($game->playGame($debug));
+            array_push($winners, $game->playGame());
         }
 
         return $winners;
     }
+
+    /* GETTERS Y SETTERS*/
 
     public function getId(): ?int
     {
@@ -84,7 +96,7 @@ class Stage
 
     public function setSequence(int $sequence): self
     {
-        if ($sequence < 0) $sequence = 0;        
+        if ($sequence < 0) $sequence = 0;
         $this->sequence = $sequence;
 
         return $this;

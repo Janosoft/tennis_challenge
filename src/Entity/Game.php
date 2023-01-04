@@ -38,17 +38,22 @@ class Game
     {
         if ($homeplayer === $awayplayer) throw new InvalidArgumentException('Player vs Same Player');
         $faker = Faker\Factory::create();
-        $this->setHomeplayer($homeplayer);        
-        $this->setAwayplayer($awayplayer);        
+        $this->setHomeplayer($homeplayer);
+        $this->setAwayplayer($awayplayer);
         $this->setStage($stage);
         $this->setLucky($faker->numberBetween(0, 10));
         $this->setFavorslocals($faker->boolean());
-        
+
         $awayplayer->addAwaygame($this);
-        $homeplayer->addLocalgame($this);        
+        $homeplayer->addLocalgame($this);
         $stage->addGame($this);
     }
 
+    /**
+     * Convierte y devuelve el objeto como un array asociativo [nombre_atributo] => [valor_atributo]
+     *
+     * @return array Devuelve un array que contiene todos los atributos del objeto
+     */
     public function toArray(): array
     {
         $array = [
@@ -63,6 +68,11 @@ class Game
         return $array;
     }
 
+    /**
+     * Convierte y devuelve el objeto en un formato JSON {"[nombre_atributo]" : "[valor_atributo]"}
+     *
+     * @return string Devuelve un string que contiene todos los atributos del objeto en formato JSON
+     */
     public function toJSON(): string
     {
         $array = $this->toArray();
@@ -70,20 +80,18 @@ class Game
         return json_encode($array);
     }
 
-    public function playGame(bool $debug = false): Player
+    /**
+     * Calcula y devuelve el ganador de un partido según sus puntos de habilidad, la suerte, y si se favorece al jugador local
+     * 
+     * @return Player Devuelve un objeto Player correspondiente al ganador del Game
+     */
+    public function playGame(): Player
     {
         $skillPointsHomePlayer = $this->getPlayerSkillPoints($this->getHomeplayer());
         $skillPointsAwayPlayer = $this->getPlayerSkillPoints($this->getAwayplayer());
 
         if ($this->isFavorslocals()) $skillPointsHomePlayer += $this->getLucky();
         else $skillPointsAwayPlayer += $this->getLucky();
-
-        if ($debug) {
-            dump("Lucky: {$this->getLucky()}");
-            dump("Favors Local: " . ($this->isFavorslocals() ? "true" : "false"));
-            dump("HomePlayer: {$this->getHomeplayer()->getName()} ({$skillPointsHomePlayer})");
-            dump("AwayPlayer: {$this->getAwayplayer()->getName()} ({$skillPointsAwayPlayer})");
-        }
 
         if ($skillPointsHomePlayer == $skillPointsAwayPlayer) {
             // en caso de empate se decide si se favorece al local en el juego
@@ -94,6 +102,12 @@ class Game
         }
     }
 
+    /**
+     * Calcula y devuelve la sumatoria de las habilidades de un jugador, dependiendo del tipo de torneo que se esté jugando
+     *
+     * @param Player Jugador del cual se desean obtener los puntos de habilidad
+     * @return int Devuelve los puntos de habilidad de un jugador
+     */
     public function getPlayerSkillPoints(Player $player): int
     {
         $skillPoints = 0;
@@ -103,6 +117,8 @@ class Game
         }
         return $skillPoints;
     }
+
+    /* GETTERS Y SETTERS*/
 
     public function getId(): ?int
     {

@@ -53,7 +53,7 @@ class StageTest extends TestCase
         new Game($player1, $player2, $stage);
         new Game($player3, $player4, $stage);
         $winners = $stage->playStage();
-        $this->assertNotEmpty($winners->toArray());
-        $this->assertIsArray($winners->toArray());
+        $this->assertNotEmpty($winners);
+        $this->assertIsArray($winners);
     }
 }

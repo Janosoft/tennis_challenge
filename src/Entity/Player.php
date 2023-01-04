@@ -45,6 +45,19 @@ class Player
         $this->awaygames = new ArrayCollection();
     }
 
+    public function __toString(): string
+    {
+        return "({$this->getId()}) {$this->getName()} ST:{$this->getStrength()} SP:{$this->getSpeed()} RE:{$this->getReaction()}";
+    }
+
+    /**
+     * Crea un objeto Player desde un JSON que contiene sus atributos
+     *
+     * JSON DE EJEMPLO
+     * {"name": "jano","strength": 80,"speed": 50,"reaction": 456}
+     * 
+     * @return Player Devuelve un objeto Player inicializado
+     */
     public static function fromJSON(string $json): Player
     {
         $faker = Faker\Factory::create();
@@ -57,6 +70,11 @@ class Player
         return new Player($name, $strength, $speed, $reaction);
     }
 
+    /**
+     * Convierte y devuelve el objeto como un array asociativo [nombre_atributo] => [valor_atributo]
+     *
+     * @return array Un array que contiene todos los atributos del objeto
+     */
     public function toArray(): array
     {
         $array = [
@@ -70,6 +88,11 @@ class Player
         return $array;
     }
 
+    /**
+     * Convierte y devuelve el objeto en un formato JSON {"[nombre_atributo]" : "[valor_atributo]"}
+     *
+     * @return string Un string que contiene todos los atributos del objeto en formato JSON
+     */
     public function toJSON(): string
     {
         $array = $this->toArray();
@@ -77,15 +100,17 @@ class Player
         return json_encode($array);
     }
 
-    public function __toString(): string
-    {
-        return "({$this->getId()}) {$this->getName()} ST:{$this->getStrength()} SP:{$this->getSpeed()} RE:{$this->getReaction()}";
-    }
-
+    /**
+     * Devuelve las posibles habilidades de un jugador que podrán ser utilizadas para competir
+     *
+     * @return array Devuelve un array de strings con el nombre de habilidades disponibles
+     */
     public static function getPosibleSkills(): array
     {
         return ['strength', 'speed', 'reaction'];
     }
+
+    /* GETTERS Y SETTERS*/
 
     public function getSkill(string $skill): int
     {

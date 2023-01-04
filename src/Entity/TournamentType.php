@@ -32,6 +32,19 @@ class TournamentType
         $this->tournaments = new ArrayCollection();
     }
 
+    public function __toString(): string
+    {
+        return "({$this->getId()}) {$this->getTitle()} Skills: " . implode(', ', $this->getSkills());
+    }
+
+    /**
+     * Crea un objeto TournamentType desde un JSON que contiene sus atributos
+     *
+     * JSON DE EJEMPLO
+     * {"title": "masculino","skills": ["Strength","speed"]}
+     * 
+     * @return TournamentType Devuelve un objeto TournamentType inicializado
+     */
     public static function fromJSON(string $json): TournamentType
     {
         $data = json_decode($json, true);
@@ -40,6 +53,11 @@ class TournamentType
         return new TournamentType($title, $skills);
     }
 
+    /**
+     * Convierte y devuelve el objeto como un array asociativo [nombre_atributo] => [valor_atributo]
+     *
+     * @return array Un array que contiene todos los atributos del objeto
+     */
     public function toArray(): array
     {
         $array = [
@@ -51,6 +69,11 @@ class TournamentType
         return $array;
     }
 
+    /**
+     * Convierte y devuelve el objeto en un formato JSON {"[nombre_atributo]" : "[valor_atributo]"}
+     *
+     * @return string Un string que contiene todos los atributos del objeto en formato JSON
+     */
     public function toJSON(): string
     {
         $array = $this->toArray();
@@ -58,10 +81,7 @@ class TournamentType
         return json_encode($array);
     }
 
-    public function __toString(): string
-    {
-        return "({$this->getId()}) {$this->getTitle()} Skills: " . implode(', ', $this->getSkills());
-    }
+    /* GETTERS Y SETTERS*/
 
     public function getId(): ?int
     {
