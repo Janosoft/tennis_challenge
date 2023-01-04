@@ -11,7 +11,6 @@ use PHPUnit\Framework\TestCase;
 
 class TournamentTest extends TestCase
 {
-
     public function testATournamentCanBeCreated(): void
     {
         $tournament_type = new TournamentType("masculino", ['strength', 'speed']);
@@ -44,7 +43,7 @@ class TournamentTest extends TestCase
     {
         $tournament_type = new TournamentType("masculino", ['strength', 'speed']);
         $tournament = new Tournament("2010-01-28", $tournament_type);
-        $stage = new Stage(1, $tournament);
+        new Stage(1, $tournament);
         $player1 = new Player("Jano", 80, 80, 80);
         $player2 = new Player("Colo", 80, 80, 80);
         $player3 = new Player("Pepe", 80, 80, 80);
@@ -54,12 +53,22 @@ class TournamentTest extends TestCase
         $this->assertNotEmpty($tournament->getWinner());
         $this->assertIsString($tournament->getWinner());
     }
+
+    public function testATournamentCanBePlayedFromJSON(): void
+    {
+        $json= '{"tournament_type":{"title":"Mixto","skills":["strength","reaction"]},"players":[{"name":"Alejandro","strength":90,"speed":85,"reaction":90},{"name":"Andrea","strength":85,"speed":90,"reaction":90}]}';
+        $tournament= new Tournament();
+        $tournament->setJson($json);
+        $tournament->playJsonTournament();
+        $this->assertNotEmpty($tournament->getWinner());
+        $this->assertIsString($tournament->getWinner());
+    }
     
     public function testATournamentCantHaveLosersWinning(): void
     {
         $tournament_type = new TournamentType("masculino", ['strength', 'speed']);
         $tournament = new Tournament("2010-01-28", $tournament_type);
-        $stage = new Stage(1, $tournament);
+        new Stage(1, $tournament);
         $player1 = new Player("Winner", 100, 100, 100);
         $player2 = new Player("Loser 1", 0, 0, 0);
         $player3 = new Player("Loser 2", 0, 0, 0);
