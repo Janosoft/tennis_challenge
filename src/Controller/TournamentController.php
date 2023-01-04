@@ -29,6 +29,7 @@ class TournamentController extends AbstractController
         ]);
     }
 
+    //TODO Mudar a ApiController
     #[Route('/', name: 'createAPI', methods: ["POST"])]
     public function createAPI(Request $request): Response
     {
