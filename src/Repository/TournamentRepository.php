@@ -53,4 +53,21 @@ class TournamentRepository extends ServiceEntityRepository
        ;
    }
 
+   /**
+    * @return Tournament[] Returns an array of Tournament objects
+    */
+   public function findByType(string $title): array
+   {
+       return $this->createQueryBuilder('t')
+           ->innerJoin('t.tournamentType','tt')
+           ->andWhere('tt.title = :title')
+           ->setParameter('title', $title)
+           ->orderBy('t.id', 'ASC')
+           ->getQuery()
+           ->getResult()
+       ;
+   }
+
+
+
 }
