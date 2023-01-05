@@ -24,7 +24,6 @@ class TournamentController extends AbstractController
     {
         $tournaments = $this->em->getRepository(Tournament::class)->findAll();
         return $this->render('tournament/index.html.twig', [
-            'controller_name' => 'TournamentController',
             'tournaments' => $tournaments,
         ]);
     }
@@ -50,9 +49,7 @@ class TournamentController extends AbstractController
     {
         $tournaments = $this->em->getRepository(Tournament::class)->findByDate($date);
         return $this->render('tournament/show.html.twig', [
-            'controller_name' => 'TournamentController',
             'tournaments' => $tournaments,
         ]);
     }
-
 }

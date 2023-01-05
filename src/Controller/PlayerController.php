@@ -22,7 +22,6 @@ class PlayerController extends AbstractController
     {
         $players = $this->em->getRepository(Player::class)->findAll();
         return $this->render('player/index.html.twig', [
-            'controller_name' => 'PlayerController',
             'players' => $players,
         ]);
     }
@@ -34,9 +33,7 @@ class PlayerController extends AbstractController
         $player->getAwaygames();
 
         return $this->render('player/show.html.twig', [
-            'controller_name' => 'PlayerController',
             'player' => $player,
         ]);
     }
-    
 }

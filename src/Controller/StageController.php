@@ -22,7 +22,6 @@ class StageController extends AbstractController
     {
         $stages = $this->em->getRepository(Stage::class)->findAll();
         return $this->render('stage/index.html.twig', [
-            'controller_name' => 'StageController',
             'stages' => $stages,
         ]);
     }

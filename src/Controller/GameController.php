@@ -22,7 +22,6 @@ class GameController extends AbstractController
     {
         $games = $this->em->getRepository(Game::class)->findAll();
         return $this->render('game/index.html.twig', [
-            'controller_name' => 'GameController',
             'games' => $games,
         ]);
     }

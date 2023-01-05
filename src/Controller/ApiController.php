@@ -27,9 +27,7 @@ class ApiController extends AbstractController
     #[Route('/', name: 'apihomepage', methods: ["GET"])]
     public function index(): Response
     {
-        return $this->render('api/index.html.twig', [
-            'controller_name' => 'ApiController',
-        ]);
+        return $this->render('api/index.html.twig', []);
     }
 
     #[Route('/tournament_type', name: 'tournament_type_index', methods: ["GET"])]
@@ -68,13 +66,13 @@ class ApiController extends AbstractController
     #[Route('/tournament', name: 'tournament_create', methods: ["POST"])]
     public function tournament_create(Request $request): Response
     {
-        $json= $request->getContent();
+        $json = $request->getContent();
         if (empty($json)) return $this->json('Parameter json required. Send through Request Body', 400);
-        $array= json_decode($json,true);
+        $array = json_decode($json, true);
         if (empty($array['date'])) return $this->json('{date : value } required. Send inside json parameter', 400);
         if (empty($array['tournament_type'])) return $this->json('{tournament_type : value} required. Send inside json parameter', 400);
         if (empty($array['players'])) return $this->json('{players: value} required. Send inside json parameter', 400);
-        
+
         $tournament = new Tournament();
         $tournament->setJson($json);
         $tournament->playJsonTournament();
@@ -85,7 +83,7 @@ class ApiController extends AbstractController
 
     #[Route('/tournament/{date}', name: 'tournament_show', methods: ["GET"])]
     public function tournament_show(string $date): JsonResponse
-    {        
+    {
         $tournaments = $this->em->getRepository(Tournament::class)->findByDate($date);
         $data = [];
         foreach ($tournaments as $tournament) {
