@@ -9,12 +9,25 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <h1>Listado Disponible</h1>
 
-    This friendly message is coming from:
+    Recuerde que puede acceder al Swagger de Tennis Challenge aquí: <a href="https://app.swaggerhub.com/apis/JANOSOFT_1/tennis_challenge/1.1">Acceder</a>
     <ul>
-        <li>Your controller at <code><a href="{{ 'C:/xampp/htdocs/tennis_challenge/src/Controller/ApiController.php'|file_link(0) }}">src/Controller/ApiController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/xampp/htdocs/tennis_challenge/templates/api/index.html.twig'|file_link(0) }}">templates/api/index.html.twig</a></code></li>
+        <li><a href="{{ url('api_tournament_type_index')}}" target="_self">Listado de Tipos de Torneos</a></li>
+        <li><a href="{{ url('api_tournament_index')}}" target="_self">Listado Torneos</a></li>
+        <li><a href="{{ url('api_stage_index')}}" target="_self">Listado Etapas</a></li>
+        <li><a href="{{ url('api_game_index')}}" target="_self">Listado Partidos</a></li>
+        <li><a href="{{ url('api_player_index')}}" target="_self">Listado Jugadores</a></li>
     </ul>
+
+    También puede:
+    <ul>
+        <li>Obtener Torneos según su Tipo: <strong>/api/tournament_type/{$title}</strong></li>
+        <li>Obtener Torneos según su Fecha: <strong>/api/tournament/{$date}</strong></li>
+        <li>Obtener Etapas según su Id: <strong>/api/stage/{$id}</strong></li>
+        <li>Obtener Partidos según su Id: <strong>/api/game/{$id}</strong></li>
+        <li>Obtener un Jugador según su Id: <strong>/api/player/{$id}</strong></li>
+    </ul>
+
 </div>
 {% endblock %}
