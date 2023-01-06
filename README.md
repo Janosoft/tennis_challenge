@@ -20,6 +20,8 @@ TournamentType --* Tournament --* Stages --* Games *-- Players
 * Como base de datos se utilizará Mysql/MariaDB
 * Se utilizará el repositorio tennis_challenge desde el inicio, para poder contar con el registro total de cambios
 * Se utilizará como IDE Visual Studio Code
+* Posee una sección visual en la home del sitio (/) que utiliza Bootstrap, de forma básica ya que no quise dedicarle mucho tiempo pero si hacerla funcional.
+* Posee otra sección como API (/api/), (también accesible desde la parte visual), desde la cual se pueden obtener jsons o crear un torneo.
 
 ## NOTAS DE DESARROLLO ##
 
