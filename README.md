@@ -71,18 +71,19 @@ TournamentType --* Tournament --* Stages --* Games *-- Players
 * Se incluye .env para mayor facilidad
 * Está configurado para utilizar servidor de base de datos Mysql estandar (usé la última versión de xampp) en el puerto 3306
 
-git clone git@github.com:Janosoft/tennis_challenge.git
-composer install
-php bin\console doctrine:database:create
-php bin\console doctrine:schema:update --force
-php bin/console --env=dev doctrine:fixtures:load
+* git clone git@github.com:Janosoft/tennis_challenge.git
+* composer install
+* php bin\console doctrine:database:create
+* php bin\console doctrine:schema:update --force
+* php bin/console --env=dev doctrine:fixtures:load
 
-(OPCIONAL ENTORNO DE TEST)
-php bin/console --env=test doctrine:database:create
-php bin/console --env=test doctrine:schema:create
-php bin/console --env=test doctrine:fixtures:load
+* (OPCIONAL ENTORNO DE TEST)
+* php bin/console --env=test doctrine:database:create
+* php bin/console --env=test doctrine:schema:create
+* php bin/console --env=test doctrine:fixtures:load
+* (OPCIONAL ENTORNO DE TEST)
 
-symfony serve
+* symfony serve
 
 ## AUTOR ##
 Alejandro Martín Lodes
