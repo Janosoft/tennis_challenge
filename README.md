@@ -67,5 +67,19 @@ TournamentType --* Tournament --* Stages --* Games *-- Players
   ]
 }
 
+## INSTALACIÓN ##
+git clone git@github.com:Janosoft/tennis_challenge.git
+php .\bin\console doctrine:database:create
+php .\bin\console doctrine:schema:update --force
+php bin/console --env=dev doctrine:fixtures:load
+
+(OPCIONAL ENTORNO DE TEST)
+php bin/console --env=test doctrine:database:create
+php bin/console --env=test doctrine:schema:create
+php bin/console --env=test doctrine:fixtures:load
+php bin/console --env=test doctrine:fixtures:load
+
+symfony serve
+
 ## AUTOR ##
 Alejandro Martín Lodes
