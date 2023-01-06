@@ -72,6 +72,7 @@ TournamentType --* Tournament --* Stages --* Games *-- Players
 * Está configurado para utilizar servidor de base de datos Mysql estandar (usé la última versión de xampp) en el puerto 3306
 
 git clone git@github.com:Janosoft/tennis_challenge.git
+composer install
 php bin\console doctrine:database:create
 php bin\console doctrine:schema:update --force
 php bin/console --env=dev doctrine:fixtures:load
