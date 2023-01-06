@@ -16,7 +16,7 @@ TournamentType --* Tournament --* Stages --* Games *-- Players
 
 ## CARACTERISTICAS ##
 
-* Se creará una app utilizando el framework Symfony. Vale aclarar que será la primera app creada con ese framework
+* Se creará una app utilizando el framework Symfony 6. Vale aclarar que será mi primer app creada con este framework
 * Como base de datos se utilizará Mysql/MariaDB
 * Se utilizará el repositorio tennis_challenge desde el inicio, para poder contar con el registro total de cambios
 * Se utilizará como IDE Visual Studio Code
@@ -68,6 +68,9 @@ TournamentType --* Tournament --* Stages --* Games *-- Players
 }
 
 ## INSTALACIÓN ##
+* Se incluye .env para mayor facilidad
+* Está configurado para utilizar servidor de base de datos Mysql estandar (usé la última versión de xampp) en el puerto 3306
+
 git clone git@github.com:Janosoft/tennis_challenge.git
 php .\bin\console doctrine:database:create
 php .\bin\console doctrine:schema:update --force
@@ -76,7 +79,6 @@ php bin/console --env=dev doctrine:fixtures:load
 (OPCIONAL ENTORNO DE TEST)
 php bin/console --env=test doctrine:database:create
 php bin/console --env=test doctrine:schema:create
-php bin/console --env=test doctrine:fixtures:load
 php bin/console --env=test doctrine:fixtures:load
 
 symfony serve
